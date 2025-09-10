@@ -1,0 +1,26 @@
+<main class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="col-10 col-md-6 text-center bg-light p-4 rounded shadow">
+    <h2 class="mb-4">Log in or sign up</h2>
+
+    <div class="d-flex align-items-center mb-3">
+      <label for="email" class="form-label me-5 mb-0" style="width: 15%;"><strong>Email</strong></label>
+      <input id="email" type="email" class="form-control" placeholder="Email or username" [(ngModel)]="UserEmail" style="width: 80%;"/>
+    </div>
+    <div class="d-flex align-items-center mb-3">
+      <label for="password" class="form-label me-3 mb-0" style="width: 22%;"><strong>Password</strong></label>
+      <input id="password" type="password" class="form-control" [(ngModel)]="UserPassword" style="width: 80%;"/>
+    </div>
+    <button class="btn btn-success" (click)="login()">
+      <i class="fa-solid fa-right-to-bracket"></i> 
+    </button>
+    <div class="text-center mb-3">
+      <span>or</span>
+    </div>
+    <button class="btn btn-primary">
+      Create a Demo Account
+    </button>
+
+  </div>
+</main>
+
+<router-outlet></router-outlet>
