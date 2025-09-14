@@ -17,14 +17,13 @@ def has_admin():
     res = DBHelper.has_value("Users", "Username", "Admin")
     if not res:
         DBHelper.insert_value("Users", 
-                              ["Username","Password","FirstName","LastName","Email","AdminLevel","IsAdmin","IsDemo"],
-                              ["Admin","password123","Jonathan","Dressel","jonathanedressel","Site","true","false"])
+                              ["Username","FirstName","LastName","Email","AdminLevel","IsAdmin","IsDemo"],
+                              ["Admin","Jonathan","Dressel","jonathanedressel","Site","true","false"])
 
 def validate_db():
     DBHelper.has_table("Users",
         "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " \
                     "Username TEXT UNIQUE, " \
-                    "Password TEXT, " \
                     "FirstName TEXT, " \
                     "LastName TEXT, " \
                     "Email TEXT UNIQUE, " \
@@ -52,7 +51,6 @@ def user_profile():
     uname = req['username']
     if len(uname) > 0 and uname:
         res = DBHelper.has_value("Users", "Username", uname)
-        print(res, uname)
         if not res:
             return jsonify({"message": "Invalid login credentials"}), 404
         

@@ -19,7 +19,6 @@ def has_value(table, field, value):
     cursor.execute(f"SELECT Id FROM {table} WHERE {field}=?", [value])
     dta = cursor.fetchall()
     conn.close()
-    print(dta)
     return len(dta) > 0
 
 def set_default(table, field, value, where):
