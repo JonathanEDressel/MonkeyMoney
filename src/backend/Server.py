@@ -45,7 +45,7 @@ def about():
     return "Hello from the ABOUT page!"
 
 @limiter.limit("20 per minute")
-@app.route('/users/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def user_profile():
     req = request.json
     uname = req['username']
