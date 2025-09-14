@@ -14,3 +14,10 @@ Creating a Angular app to learn more about login authentication, web security an
     * Add rate limiting
     * Add sql injection checks
 * Create admin settings
+
+## Running Back-End:
+1) Navigate to ./Typescript-Learning
+2) If not already, run "python -m venv venv"
+3) Run ".\venv\Scripts\activate"
+4) Navigate to the ./backend folder
+4) Run "python Server.js"

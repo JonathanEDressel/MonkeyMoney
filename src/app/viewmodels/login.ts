@@ -4,6 +4,8 @@ import { Component, NgModule, signal } from '@angular/core';
 import { SHARED_IMPORTS } from '../shared/shared-imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
+import { LoginController } from '../services/controllers/logincontroller';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +18,13 @@ export class App {
 
   UserPassword: string = "";
   UserEmail: string = "";
+  // private _loginController: LoginController
+
+  constructor() {
+  }
 
   login() {
-    //send data to the db after its set up
     console.log('clicked - ', this.UserPassword, this.UserEmail)
+    // this._loginController.login(this.UserEmail, this.UserPassword);
   }
 }
