@@ -13,32 +13,30 @@ limiter = Limiter(
     # default_limits["60 per minute"]
 )
 
-def has_admin(conn):
-    res = DBHelper.has_value(conn, "Users", "Username", "Admin")
+def has_admin():
+    res = DBHelper.has_value("Users", "Username", "Admin")
     if not res:
-        DBHelper.insert_value(conn, "Users", 
+        DBHelper.insert_value("Users", 
                               ["Username","Password","FirstName","LastName","Email","AdminLevel","IsAdmin","IsDemo"],
                               ["Admin","password123","Jonathan","Dressel","jonathanedressel","Site","true","false"])
 
-def validate_db(conn):
-    DBHelper.has_table(conn, "Users",
+def validate_db():
+    DBHelper.has_table("Users",
         "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " \
-                    "Username TEXT, " \
+                    "Username TEXT UNIQUE, " \
                     "Password TEXT, " \
                     "FirstName TEXT, " \
                     "LastName TEXT, " \
-                    "Email TEXT, " \
-                    "PhoneNumber TEXT, " \
+                    "Email TEXT UNIQUE, " \
+                    "PhoneNumber TEXT UNIQUE, " \
                     "LastLogin TEXT, " \
                     "IsDemo BOOLEAN, " \
                     "AdminLevel TEXT, " \
                     "IsAdmin BOOLEAN)")
-    has_admin(conn)
+    has_admin()
 
 def run_db_checks():
-    conn = sqlite3.connect("ProgramData.db")
-    validate_db(conn)
-    conn.close()
+    validate_db()
 
 # def get_db_connection():
     # conn = sqlite3.connect("ProgramData.db")
@@ -50,15 +48,12 @@ def about():
 @limiter.limit("20 per minute")
 @app.route('/users/login', methods=['POST'])
 def user_profile():
-    conn = sqlite3.connect("ProgramData.db")
-    print(request.json)
     req = request.json
     uname = req['username']
-    
     if len(uname) > 0 and uname:
-        res = DBHelper.has_value(conn, "Users", "Username", uname)
+        res = DBHelper.has_value("Users", "Username", uname)
         print(res, uname)
-        if res:
+        if not res:
             return jsonify({"message": "Invalid login credentials"}), 404
         
     return jsonify({"message": "Login successful"}), 200
