@@ -1,7 +1,7 @@
 export class UserModel {
+    Username = <string>("");
     FirstName = <string>("");
     LastName = <string>("");
-    Username = <string>("");
     Email = <string>("");
     PhoneNumber = <string>("");
     LastLogin = <string>("");
@@ -10,9 +10,9 @@ export class UserModel {
     IsAdmin = <string>("");
 
     constructor() {
+        this.Username = "";
         this.FirstName = "";
         this.LastName = "";
-        this.Username = "";
         this.Email = "";
         this.PhoneNumber = "";
         this.LastLogin = "";
@@ -26,9 +26,9 @@ export class UserModel {
     }
 
     assignData(data: UserModel) {
+        this.Username = data.Username;
         this.FirstName = data.FirstName;
         this.LastName = data.LastName;
-        this.Username = data.Username;
         this.Email = data.Email;
         this.PhoneNumber = data.PhoneNumber;
         this.LastLogin = data.LastLogin;
@@ -39,9 +39,9 @@ export class UserModel {
 
     getData() {
         return {
+            Username: this.Username,
             FirstName: this.FirstName,
             LastName: this.LastName,
-            Username: this.Username,
             Email: this.Email,
             PhoneNumber: this.PhoneNumber,
             LastLogin: this.LastLogin,

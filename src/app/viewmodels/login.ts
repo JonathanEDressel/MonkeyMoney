@@ -18,13 +18,11 @@ export class App {
 
   UserPassword: string = "";
   UserEmail: string = "";
-  // private _loginController: LoginController
-
-  constructor() {
-  }
+  
+  constructor(private _loginController: LoginController) {}
 
   login() {
-    console.log('clicked - ', this.UserPassword, this.UserEmail)
-    // this._loginController.login(this.UserEmail, this.UserPassword);
+    console.log('clicked - ', this.UserPassword, this.UserEmail);
+    this._loginController.login(this.UserEmail, this.UserPassword);
   }
 }
