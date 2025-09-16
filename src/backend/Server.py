@@ -1,11 +1,14 @@
 from flask import Flask, jsonify, request, abort
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_cors import CORS
 from datetime import datetime
 import helper.Helper as DBHelper
 import sqlite3
 
 app = Flask(__name__)
+
+CORS(app)
 
 limiter = Limiter(
     get_remote_address,
@@ -48,12 +51,14 @@ def run_db_checks():
 @limiter.limit("20 per minute")
 @app.route('/login', methods=['POST'])
 def user_profile():
-    req = request.json 
+    print('YUP')
+    req = request.json
+    print(req) 
     username = req.get('username', '').strip()
     password = req.get('userpassword', '').strip()
     
     if not username or not password:
-        return jsonify({"message": "Please enter a username and password"}), 404
+        return jsonify({"message": "Please enter a username and password", "status": 404})
     
     conn = sqlite3.connect("ProgramData.db")
     cursor = conn.cursor()
@@ -62,16 +67,15 @@ def user_profile():
     conn.close()
         
     if not usrrow:
-        return jsonify({"message": "Invalid login credentials"}), 404
+        return jsonify({"message": "Invalid login credentials", "status": 404})
         
     usrPWHash = usrrow[0]
     if isinstance(usrPWHash, str):
         usrPWHash = usrPWHash.encode('utf-8')
 
     if(DBHelper.check_passwords(password, usrPWHash)):
-        print('YUP')
-        return jsonify({"message": "Login successful"}), 200
-    return jsonify({"message": "Invalid login credentials"}), 404
+        return jsonify({"message": "Login successful", "status": 200})
+    return jsonify({"message": "Invalid login credentials", "status": 404})
 
 @app.route('/')
 def home():
