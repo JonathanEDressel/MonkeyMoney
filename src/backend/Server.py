@@ -1,7 +1,7 @@
-# Example using Flask
 from flask import Flask, jsonify, request, abort
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from datetime import datetime
 import helper.Helper as DBHelper
 import sqlite3
 
@@ -10,24 +10,32 @@ app = Flask(__name__)
 limiter = Limiter(
     get_remote_address,
     app=app,
-    # default_limits["60 per minute"]
+    default_limits=["60 per minute"]
 )
 
 def has_admin():
-    res = DBHelper.has_value("Users", "Username", "Admin")
+    res = DBHelper.has_value("UserAcct", "Username", "Admin")
     if not res:
-        DBHelper.insert_value("Users", 
-                              ["Username","FirstName","LastName","Email","AdminLevel","IsAdmin","IsDemo"],
-                              ["Admin","Jonathan","Dressel","jonathanedressel","Site","true","false"])
+        h = DBHelper.encrypt_password("password")
+        currDte = str(datetime.now())
+        DBHelper.insert_value("UserAcct", 
+                              ["Username","UserPassword", "FirstName","LastName","Email","CreatedDate",
+                               "ConfirmedEmail","TwoFactor","AdminLevel","IsAdmin","IsDemo"],
+                              ["Admin", h,"Jonathan","Dressel","jonathanedressel@gmail.com",currDte,
+                               "false","false","Site","true","false"])
 
 def validate_db():
-    DBHelper.has_table("Users",
+    DBHelper.has_table("UserAcct",
         "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " \
                     "Username TEXT UNIQUE, " \
                     "FirstName TEXT, " \
                     "LastName TEXT, " \
+                    "UserPassword TEXT, " \
                     "Email TEXT UNIQUE, " \
                     "PhoneNumber TEXT UNIQUE, " \
+                    "CreatedDate TEXT, " \
+                    "ConfirmedEmail BOOLEAN, " \
+                    "TwoFactor BOOLEAN, " \
                     "LastLogin TEXT, " \
                     "IsDemo BOOLEAN, " \
                     "AdminLevel TEXT, " \
@@ -37,28 +45,37 @@ def validate_db():
 def run_db_checks():
     validate_db()
 
-# def get_db_connection():
-    # conn = sqlite3.connect("ProgramData.db")
-
-@app.route('/about', methods=['GET'])
-def about():
-    return "Hello from the ABOUT page!"
-
 @limiter.limit("20 per minute")
 @app.route('/login', methods=['POST'])
 def user_profile():
-    req = request.json
-    uname = req['username']
-    if len(uname) > 0 and uname:
-        res = DBHelper.has_value("Users", "Username", uname)
-        if not res:
-            return jsonify({"message": "Invalid login credentials"}), 404
+    req = request.json 
+    username = req.get('username', '').strip()
+    password = req.get('userpassword', '').strip()
+    
+    if not username or not password:
+        return jsonify({"message": "Please enter a username and password"}), 404
+    
+    conn = sqlite3.connect("ProgramData.db")
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT UserPassword FROM UserAcct WHERE Username=?", [username])
+    usrrow = cursor.fetchone()
+    conn.close()
         
-    return jsonify({"message": "Login successful"}), 200
+    if not usrrow:
+        return jsonify({"message": "Invalid login credentials"}), 404
+        
+    usrPWHash = usrrow[0]
+    if isinstance(usrPWHash, str):
+        usrPWHash = usrPWHash.encode('utf-8')
+
+    if(DBHelper.check_passwords(password, usrPWHash)):
+        print('YUP')
+        return jsonify({"message": "Login successful"}), 200
+    return jsonify({"message": "Invalid login credentials"}), 404
 
 @app.route('/')
 def home():
-    return "Hello from the HOME page!"
+    return "Home route"
 
 if __name__ == '__main__':
      run_db_checks()

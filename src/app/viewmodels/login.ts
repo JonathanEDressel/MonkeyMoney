@@ -22,7 +22,6 @@ export class App {
   constructor(private _loginController: LoginController) {}
 
   login() {
-    console.log('clicked - ', this.UserPassword, this.UserEmail);
     this._loginController.login(this.UserEmail, this.UserPassword);
   }
 }
