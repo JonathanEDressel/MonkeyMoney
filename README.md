@@ -5,13 +5,14 @@ Creating a Angular app to learn more about login authentication, web security an
 ## To-Do:
 * Create a login page
     * <s>Create a login page</s>
-    * Send login info to db
+    * <s>Send login info to db</s>
+    * Add JWT tokens to handle user session
 * Setup the initial user db
-    * Create initial db
-    * Insert admin user
-    * Create route for login
-    * Add password hasing/salting
-    * Add rate limiting
+    * <s>Create initial db</s>
+    * <s>Insert admin user</s>
+    * <s>Create route for login</s>
+    * <s>Add password hasing/salting</s>
+    * <s>Add rate limiting</s>
     * Add sql injection checks
 * Create admin settings
 
