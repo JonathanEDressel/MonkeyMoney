@@ -20,4 +20,10 @@ Creating a Angular app to learn more about login authentication, web security an
 2) If not already, run "python -m venv venv"
 3) Run ".\venv\Scripts\activate"
 4) Navigate to the ./backend folder
-4) Run "python Server.js"
+5) Install any necessary Python programs
+6) Run "python Server.js"
+
+## Running Front-End:
+1) Navigate to root folder
+2) Run "npm start"
+3) Open in the local browser

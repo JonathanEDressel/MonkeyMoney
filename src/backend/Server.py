@@ -37,45 +37,64 @@ def validate_db():
                     "Email TEXT UNIQUE, " \
                     "PhoneNumber TEXT UNIQUE, " \
                     "CreatedDate TEXT, " \
-                    "ConfirmedEmail BOOLEAN, " \
-                    "TwoFactor BOOLEAN, " \
+                    "ConfirmedEmail BOOLEAN DEFAULT False, " \
+                    "TwoFactor BOOLEAN DEFAULT True, " \
                     "LastLogin TEXT, " \
-                    "IsDemo BOOLEAN, " \
+                    "IsDemo BOOLEAN DEFAULT False, " \
                     "AdminLevel TEXT, " \
-                    "IsAdmin BOOLEAN)")
+                    "IsAdmin BOOLEAN DEFAULT False)")
     has_admin()
 
 def run_db_checks():
     validate_db()
 
+@limiter.limit("10 per minute")
+@app.route('/user/add', methods=['POST'])
+def add_user():
+    req = request.json
+    username = req.get('username', '').strip()
+    email = req.get('email', '').strip()
+    password = DBHelper.encrypt_password(req.get('userpassword', '').strip())
+    fname = req.get('firstname', '').strip()
+    lname = req.get('lastname', '').strip()
+    if DBHelper.has_email(email):
+        return jsonify({"message": "Email is invalid", "status": 404}), 404
+    if DBHelper.has_username(username):
+        return jsonify({"message": "Username is invalid", "status": 404}), 404
+    currDte = str(datetime.now())
+    DBHelper.insert_value("UserAcct", 
+                              ["Username","UserPassword", "FirstName","LastName","Email","CreatedDate"],
+                              [username, password,fname,lname,email,currDte])
+    return jsonify({"message": "User added", "status": 200}), 200
+
 @limiter.limit("20 per minute")
 @app.route('/login', methods=['POST'])
 def user_profile():
-    print('YUP')
     req = request.json
-    print(req) 
     username = req.get('username', '').strip()
     password = req.get('userpassword', '').strip()
-    
     if not username or not password:
-        return jsonify({"message": "Please enter a username and password", "status": 404})
+        return jsonify({"message": "Please enter a username and password", "status": 404}), 404
     
     conn = sqlite3.connect("ProgramData.db")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT UserPassword FROM UserAcct WHERE Username=?", [username])
+    cursor.execute(f"SELECT UserPassword FROM UserAcct WHERE Username=? or Email=?", [username, username])
     usrrow = cursor.fetchone()
     conn.close()
-        
     if not usrrow:
-        return jsonify({"message": "Invalid login credentials", "status": 404})
+        return jsonify({"message": "Invalid login credentials", "status": 404}), 404
         
     usrPWHash = usrrow[0]
     if isinstance(usrPWHash, str):
         usrPWHash = usrPWHash.encode('utf-8')
 
     if(DBHelper.check_passwords(password, usrPWHash)):
-        return jsonify({"message": "Login successful", "status": 200})
-    return jsonify({"message": "Invalid login credentials", "status": 404})
+        currDte = str(datetime.now())
+        updatedLogin = DBHelper.update_value("UserAcct", "LastLogin", currDte, "Username", username)
+        if not updatedLogin:
+            DBHelper.update_value("UserAcct", "LastLogin", currDte, "Email", username)
+        return jsonify({"message": "Login successful", "status": 200}), 200
+    return jsonify({"message": "Invalid login credentials", "status": 404}), 404
 
 @app.route('/')
 def home():
