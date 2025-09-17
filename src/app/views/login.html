@@ -1,6 +1,6 @@
 <main class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="col-10 col-md-6 text-center bg-light p-4 rounded shadow">
-    <h2 class="mb-4">Log in or sign up</h2>
+    <h2 class="mb-4">Log In or Sign Up</h2>
 
     <div class="d-flex align-items-center mb-3">
       <label for="email" class="form-label me-5 mb-0" style="width: 15%;"><strong>Email</strong></label>
@@ -13,14 +13,17 @@
     <button class="btn btn-success" (click)="login()">
       <i class="fa-solid fa-right-to-bracket"></i> 
     </button>
-    <div class="text-center mb-3">
-      <span>or</span>
+    @if (ErrorMsg()) {
+      <div class="mt-2 alert alert-warning" role="alert">
+        <label>{{ErrorMsg()}}</label>
+      </div>
+    }
+    <div class="text-center mt-3 mb-3">
+      <strong>OR</strong>
     </div>
-    <button class="btn btn-primary">
-      Create a Demo Account
+    <button class="btn btn-primary" (click)="createAccount()">
+      Create an Account
     </button>
-
   </div>
 </main>
 
-<router-outlet></router-outlet>

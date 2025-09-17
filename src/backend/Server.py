@@ -48,11 +48,12 @@ def validate_db():
 def run_db_checks():
     validate_db()
 
-@limiter.limit("10 per minute")
+@limiter.limit("20 per minute")
 @app.route('/user/add', methods=['POST'])
 def add_user():
     req = request.json
-    username = req.get('username', '').strip()
+    print(req)
+    username = req.get('email', '').strip()
     email = req.get('email', '').strip()
     password = DBHelper.encrypt_password(req.get('userpassword', '').strip())
     fname = req.get('firstname', '').strip()

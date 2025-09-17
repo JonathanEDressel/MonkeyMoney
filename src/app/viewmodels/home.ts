@@ -10,8 +10,8 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'home-root',
   imports: [FormsModule],
-  templateUrl: '../views/home.html'
-//   styleUrl: '../styles/login.scss'
+  templateUrl: '../views/home.html',
+  styleUrl: '../styles/home.scss'
 })
 export class HomeComponent {
     

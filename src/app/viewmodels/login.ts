@@ -1,15 +1,13 @@
 import { NgClass } from '@angular/common';
 import { EmailValidator, FormsModule } from '@angular/forms';
 import { Component, NgModule, signal } from '@angular/core';
-import { SHARED_IMPORTS } from '../shared/shared-imports';
-import { BrowserModule } from '@angular/platform-browser';
 import { Router, RouterOutlet } from '@angular/router';
 import { LoginController } from '../services/controllers/logincontroller';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet, FormsModule],
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormsModule],
   templateUrl: '../views/login.html',
   styleUrl: '../styles/login.scss'
 })
@@ -18,20 +16,27 @@ export class LoginComponent {
 
   UserPassword: string = "";
   UserEmail: string = "";
+  ErrorMsg = signal("");
   
   constructor(private router: Router, private _loginController: LoginController) {}
 
-  login() {
+  createAccount() {
+    this.router.navigate(['/createaccount']);
+  }
 
-    console.log(this.UserEmail, this.UserPassword)
+  login() {
     this._loginController.login(this.UserEmail, this.UserPassword)
       .subscribe({
             next: (res) => {
-                console.log(res)
-                if(res.status === 200) 
+                if(res.status === 200) {
                     this.router.navigate(['/home'])
+                    this.ErrorMsg.set("");
+                }
             },
-            error: (err) => console.log('ERROR: ', err)
+            error: (err) => {
+              this.ErrorMsg.set("Invalid credentials");
+              console.log("ERROR: " + err, this.ErrorMsg)
+            }
         });
   }
 }

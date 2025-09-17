@@ -6,7 +6,13 @@ Creating a Angular app to learn more about login authentication, web security an
 * Create a login page
     * <s>Create a login page</s>
     * <s>Send login info to db</s>
+    * <s>Add error message</s>
     * Add JWT tokens to handle user session
+    * Create sign up page
+    * Add payment page
+    * Add forgot password page
+    * Add email validation
+    * Implement SSO
 * Setup the initial user db
     * <s>Create initial db</s>
     * <s>Insert admin user</s>
@@ -14,7 +20,16 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Add password hasing/salting</s>
     * <s>Add rate limiting</s>
     * Add sql injection checks
-* Create admin settings
+* Error Logging DB:
+    * Add error logging db
+    * Add error logging table
+    * Find way to log errors in the table when exceptions are hit
+* Page routing
+    * <s>Route pages on one page</s>
+    * Add auth for pages when not logged in
+* Misc. 
+    * Create admin settings
+    * Switch to MySQL
 
 ## Running Back-End:
 1) Navigate to ./Typescript-Learning
