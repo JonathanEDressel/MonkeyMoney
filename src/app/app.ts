@@ -6,7 +6,14 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet],
   template: `
-    <div class="container text-center" style="height: 900px;">
+    <style>
+      .main-body {
+        height: 90%;
+        background-color: lightgray;
+        border-radius: 5px;
+      }
+    </style>
+    <div class="container text-center main-body">
       <router-outlet></router-outlet>
     </div>
   `

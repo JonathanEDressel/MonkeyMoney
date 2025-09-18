@@ -2,6 +2,20 @@
 
 Creating a Angular app to learn more about login authentication, web security and many other fields.
 
+## Running Back-End:
+1) Navigate to ./Typescript-Learning
+2) If not already, run "python -m venv venv"
+3) Run ".\venv\Scripts\activate"
+4) Navigate to the ./backend folder
+5) Install any necessary Python programs
+    - "pip install flask flask-limiter flask-cors bcrypt
+6) Run "python Server.js"
+
+## Running Front-End:
+1) Navigate to root folder
+2) Run "npm start"
+3) Open in the local browser
+
 ## To-Do:
 * Create a login page
     * <s>Create a login page</s>
@@ -30,16 +44,3 @@ Creating a Angular app to learn more about login authentication, web security an
 * Misc. 
     * Create admin settings
     * Switch to MySQL
-
-## Running Back-End:
-1) Navigate to ./Typescript-Learning
-2) If not already, run "python -m venv venv"
-3) Run ".\venv\Scripts\activate"
-4) Navigate to the ./backend folder
-5) Install any necessary Python programs
-6) Run "python Server.js"
-
-## Running Front-End:
-1) Navigate to root folder
-2) Run "npm start"
-3) Open in the local browser

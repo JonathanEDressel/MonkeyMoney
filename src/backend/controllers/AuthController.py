@@ -1,20 +1,13 @@
-from flask import Flask, jsonify, request, abort
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
+from flask import Blueprint, jsonify, request
 from datetime import datetime
+from Extensions import limiter
 import helper.Helper as DBHelper
 import sqlite3
 
-app = Flask(__name__)
+auth_bp = Blueprint("auth", __name__)
 
-limiter = Limiter(
-    get_remote_address,
-    app=app,
-    default_limits=["60 per minute"]
-)
-
+@auth_bp.route('/login', methods=['POST'])
 @limiter.limit("20 per minute")
-@app.route('/login', methods=['POST'])
 def user_profile():
     req = request.json
     username = req.get('username', '').strip()
