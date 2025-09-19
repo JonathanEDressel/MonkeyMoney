@@ -1,7 +1,23 @@
 import sqlite3
+import mysql.connector
 import bcrypt
+import os
+
+HOST_URL=os.getenv("HOST_URL")
+MYSQL_USER=os.getenv("MYSQL_USER")
+MYSQL_PASSWORD=os.getenv("MYSQL_PASSWORD")
+MYSQL_PROGRAM_DB=os.getenv("MYSQL_PROGRAM_DB")
+
+programDB = mysql.connector.connect(
+    host=HOST_URL,
+    user=MYSQL_USER,
+    password=MYSQL_PASSWORD
+)
 
 def _get_ProgramDB_Connection():
+    return sqlite3.connect("ProgramData.db")
+
+def _get_ProgramDB_Connection2():
     return sqlite3.connect("ProgramData.db")
 
 def has_table(table, fields):
@@ -66,6 +82,12 @@ def has_value(table, field, value):
         dta = cursor.fetchall()
         conn.close()
         return len(dta) > 0
+    except Exception as e:
+        print(f"ERROR has_value(): {e}")
+
+def has_value2(table, field, value):
+    try:
+        
     except Exception as e:
         print(f"ERROR has_value(): {e}")
 
