@@ -87,7 +87,7 @@ def has_value(table, field, value):
 
 def has_value2(table, field, value):
     try:
-        
+        print('hi')
     except Exception as e:
         print(f"ERROR has_value(): {e}")
 
