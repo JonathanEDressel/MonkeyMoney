@@ -14,6 +14,10 @@ programDB = mysql.connector.connect(
     password=MYSQL_PASSWORD
 )
 
+# dbcursor = programDB.cursor()
+
+# dbcursor.execute("CREATE DATABASE TestDB")
+
 def _get_ProgramDB_Connection():
     return sqlite3.connect("ProgramData.db")
 

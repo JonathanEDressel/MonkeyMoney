@@ -6,8 +6,8 @@ from flask_cors import CORS
 from Routes import register_routes
 from datetime import datetime
 import helper.Helper as DBHelper
-import os
-import mysql.connector
+# import os
+# import mysql.connector
 # import sqlite3
 
 app = Flask(__name__)
