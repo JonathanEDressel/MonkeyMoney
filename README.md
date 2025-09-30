@@ -5,6 +5,7 @@ Creating a Angular app to learn more about login authentication, web security an
 ## Running Back-End:
 1) Navigate to ./Typescript-Learning
 2) If not already, run "python -m venv venv"
+    - Might need to run "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass" for security
 3) Run ".\venv\Scripts\activate"
 4) Navigate to the ./backend folder
 5) Install any necessary Python programs
