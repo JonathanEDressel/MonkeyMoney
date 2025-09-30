@@ -19,12 +19,14 @@ def run_query(query, params=None, fetch=False):
             password=MYSQL_PASSWORD,
             database=MYSQL_PROGRAM_DB
         )
+        print('connected')
         cursor = connection.cursor(dictionary=True)
+        print('set cursor')
         if params:
             cursor.execute(query, params)
         else:
             cursor.execute(query)
-        print(fetch)
+        print("fetch: " + fetch)
         # if fetch:
         return cursor.fetchall()
         # connection.commit()

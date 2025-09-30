@@ -5,6 +5,7 @@ from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 from Routes import register_routes
 from datetime import datetime
+import controllers.AuthController as AuthController
 # import helper.Helper as DBHelper
 # import helper.InitiateConnection as InitiateDB
 import os
@@ -41,6 +42,8 @@ def has_admin():
     #                            "false","false","Site","true","false"])
 
 def validate_db():
+    # has_admin()
+    AuthController.has_admin()
     # DBHelper.has_table("UserAcct",
     #     "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " \
     #                 "Username TEXT UNIQUE, " \
@@ -56,20 +59,18 @@ def validate_db():
     #                 "IsDemo BOOLEAN DEFAULT False, " \
     #                 "AdminLevel TEXT, " \
     #                 "IsAdmin BOOLEAN DEFAULT False)")
-    has_admin()
 
-# def run_db_checks():
-#     validate_db()
+def run_db_checks():
+    validate_db()
 
 @app.route('/')
 def home():
     return "Home route"
 
-# limiter.init_app(app)
+limiter.init_app(app)
 
 register_routes(app)
 
 if __name__ == '__main__':
-    #  run_db_checks()
-    # InitiateDB
+    run_db_checks()
     app.run(host='0.0.0.0', port=5000)
