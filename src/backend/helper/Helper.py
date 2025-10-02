@@ -1,5 +1,5 @@
-# import sqlite3
 from dotenv import load_dotenv
+# import InitiateConnection
 import mysql.connector
 import bcrypt
 import os
@@ -11,40 +11,35 @@ MYSQL_USER=os.getenv("MYSQL_USER")
 MYSQL_PASSWORD=os.getenv("MYSQL_PASSWORD")
 MYSQL_PROGRAM_DB=os.getenv("MYSQL_PROGRAM_DB")
 
-def run_query(query, params=None, fetch=False):
-    try:
-        connection = mysql.connector.connect(
+def connect_to_db():
+    return mysql.connector.connect(
             host=HOST_URL,
             user=MYSQL_USER,
             password=MYSQL_PASSWORD,
             database=MYSQL_PROGRAM_DB
         )
-        print('connected')
+
+def run_query(query, params=None, fetch=False):
+    try:
+        connection = connect_to_db()
         cursor = connection.cursor(dictionary=True)
-        print('set cursor')
         if params:
             cursor.execute(query, params)
         else:
             cursor.execute(query)
-        print("fetch: " + fetch)
-        # if fetch:
-        return cursor.fetchall()
-        # connection.commit()
-        # return True;
+        print("GOT RESULT")
+        if fetch:
+            return cursor.fetchall()
+        connection.commit()
+        return True
     except Exception as e:
         print(f"ERROR: {e}")
-        return None
+        return False
     finally:
         if cursor:
             cursor.close()
         if connection:
             connection.close()
-
-# def _get_ProgramDB_Connection():
-#     return sqlite3.connect("ProgramData.db")
-
-# def _get_ProgramDB_Connection2():
-#     return sqlite3.connect("ProgramData.db")
 
 # def has_table(table, fields):
 #     try:
@@ -56,18 +51,37 @@ def run_query(query, params=None, fetch=False):
 
 def update_value(table, field, value, where_field, where_value):
     try:
-        print("update_value")
-        # conn = _get_ProgramDB_Connection()
-        # cursor = conn.cursor()
-        sql = f"UPDATE {table} SET {field}=? WHERE {where_field}=?"
-        run_query(sql)
-        # cursor.execute(sql, (value, where_value))
-        # usr_updated = cursor.fetchone()
-        # conn.commit()
-        # conn.close()
-        return 1
+        sql = f"UPDATE {table} SET {field}=%s WHERE {where_field}=%s"
+        params = (value, where_value)
+        result = run_query(sql, params, fetch=False)
+        return result
     except Exception as e:
         print(f"ERROR update_value(): {e}")
+        return False
+
+def create_table(table, fields):
+    try:
+        print(f"Checking if {table} table exists.")
+        connection = connect_to_db()
+        cursor = connection.cursor()
+        
+        cursor.execute("SHOW TABLES")
+        exists = False
+        for t in cursor:
+            if t[0].lower().strip() == table.lower().strip():
+                exists = True
+                break
+        
+        if not exists:
+            print(f"{table} table does not exist. Creating table...")
+            sql = f"CREATE TABLE {table} {fields};"
+            run_query(sql)
+        else:
+            print(f"{table} table already exists")
+        return True
+    except Exception as e:
+        print(f"ERROR create_table(): {e}")
+        return False
 
 # def insert_value(table, fields, values):
 #     try:

@@ -5,63 +5,16 @@ from flask_limiter.util import get_remote_address
 from flask_cors import CORS
 from Routes import register_routes
 from datetime import datetime
-import controllers.AuthController as AuthController
-# import helper.Helper as DBHelper
-# import helper.InitiateConnection as InitiateDB
-import os
-import mysql.connector
-# import sqlite3
+import helper.SetupDatabase as SetupDB
+import helper.Helper as DBHelper
+import helper.InitiateConnection as InitiateDB
 
 app = Flask(__name__)
 CORS(app)
 
 #add limiting for each user, not whole server...
-
-def has_admin2():
-    print('fix')
-    # res = DBHelper.has_value2("UserAcct", "Username", "Admin")
-    # if not res:
-    #     h = DBHelper.encrypt_password("password")
-    #     currDte = str(datetime.now())
-    #     DBHelper.insert_value("UserAcct", 
-    #                           ["Username","UserPassword", "FirstName","LastName","Email","CreatedDate",
-    #                            "ConfirmedEmail","TwoFactor","AdminLevel","IsAdmin","IsDemo"],
-    #                           ["Admin", h,"Jonathan","Dressel","jonathanedressel@gmail.com",currDte,
-    #                            "false","false","Site","true","false"])
-
-def has_admin():
-    print('fix')
-    # res = DBHelper.has_value("UserAcct", "Username", "Admin")
-    # if not res:
-    #     h = DBHelper.encrypt_password("password")
-    #     currDte = str(datetime.now())
-    #     DBHelper.insert_value("UserAcct", 
-    #                           ["Username","UserPassword", "FirstName","LastName","Email","CreatedDate",
-    #                            "ConfirmedEmail","TwoFactor","AdminLevel","IsAdmin","IsDemo"],
-    #                           ["Admin", h,"Jonathan","Dressel","jonathanedressel@gmail.com",currDte,
-    #                            "false","false","Site","true","false"])
-
-def validate_db():
-    # has_admin()
-    AuthController.has_admin()
-    # DBHelper.has_table("UserAcct",
-    #     "(Id INTEGER PRIMARY KEY AUTOINCREMENT, " \
-    #                 "Username TEXT UNIQUE, " \
-    #                 "FirstName TEXT, " \
-    #                 "LastName TEXT, " \
-    #                 "UserPassword TEXT, " \
-    #                 "Email TEXT UNIQUE, " \
-    #                 "PhoneNumber TEXT UNIQUE, " \
-    #                 "CreatedDate TEXT, " \
-    #                 "ConfirmedEmail BOOLEAN DEFAULT False, " \
-    #                 "TwoFactor BOOLEAN DEFAULT True, " \
-    #                 "LastLogin TEXT, " \
-    #                 "IsDemo BOOLEAN DEFAULT False, " \
-    #                 "AdminLevel TEXT, " \
-    #                 "IsAdmin BOOLEAN DEFAULT False)")
-
 def run_db_checks():
-    validate_db()
+    SetupDB.validate_db()
 
 @app.route('/')
 def home():
