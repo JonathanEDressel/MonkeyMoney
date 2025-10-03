@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { EmailValidator, FormsModule } from '@angular/forms';
 import { Component, NgModule, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { LoginController } from '../services/controllers/logincontroller';
+import { AuthController } from '../services/controllers/authcontroller';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +18,14 @@ export class LoginComponent {
   UserEmail: string = "";
   ErrorMsg = signal("");
   
-  constructor(private router: Router, private _loginController: LoginController) {}
+  constructor(private router: Router, private _authController: AuthController) {}
 
   createAccount() {
     this.router.navigate(['/createaccount']);
   }
 
   login() {
-    this._loginController.login(this.UserEmail, this.UserPassword)
+    this._authController.login(this.UserEmail, this.UserPassword)
       .subscribe({
             next: (res) => {
                 if(res.status === 200) {

@@ -27,7 +27,6 @@ def run_query(query, params=None, fetch=False):
             cursor.execute(query, params)
         else:
             cursor.execute(query)
-        print("GOT RESULT")
         if fetch:
             return cursor.fetchall()
         connection.commit()
@@ -40,14 +39,6 @@ def run_query(query, params=None, fetch=False):
             cursor.close()
         if connection:
             connection.close()
-
-# def has_table(table, fields):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         conn.execute(f"CREATE TABLE IF NOT EXISTS {table} {fields}")
-#         conn.close()
-#     except Exception as e:
-#         print(f"ERROR has_table(): {e}")
 
 def update_value(table, field, value, where_field, where_value):
     try:

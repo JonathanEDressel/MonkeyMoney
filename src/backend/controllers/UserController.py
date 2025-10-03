@@ -9,7 +9,6 @@ usr_bp = Blueprint("user", __name__)
 @limiter.limit("20 per minute")
 def add_user():
     req = request.json
-    print(req)
     username = req.get('email', '').strip()
     email = req.get('email', '').strip()
     password = DBHelper.encrypt_password(req.get('userpassword', '').strip())

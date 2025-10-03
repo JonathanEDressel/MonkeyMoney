@@ -23,7 +23,7 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Send login info to db</s>
     * <s>Add error message</s>
     * Add JWT tokens to handle user session
-    * Create sign up page
+    * <s>Create sign up page</s>
     * Add payment page
     * Add forgot password page
     * Add email validation

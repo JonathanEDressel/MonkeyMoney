@@ -2,7 +2,7 @@ import { EmailValidator, FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { UserModel } from '../models/usermodel';
 import { Router } from '@angular/router';
-import { UserController } from '../services/controllers/usercontroller';
+import { AuthController } from '../services/controllers/authcontroller';
 
 
 @Component({
@@ -16,16 +16,15 @@ export class CreateAccountComponent {
     password: string = "";
 
     //have this later lead to Stripe where the user can pay to sign up
-
-    constructor(private router: Router, private _userController: UserController) {}
+    constructor(private router: Router, private _authController: AuthController) {}
 
     returnToLogin() {
       this.router.navigate(['/login']);
     }
     
     createAccount() {
-      console.log("CREATE")
-      this._userController.addUser(this.user.FirstName, this.user.LastName, this.user.Email, this.password)
+      console.log("USER - " + this.user)
+      this._authController.addUser(this.user.FirstName, this.user.LastName, this.user.Email, this.password, this.user.PhoneNumber)
         .subscribe({
             next: (res) => {
                 if(res.status === 200) {
