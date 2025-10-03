@@ -1,5 +1,5 @@
 import { EmailValidator, FormsModule } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { UserModel } from '../models/usermodel';
 import { Router } from '@angular/router';
 import { AuthController } from '../services/controllers/authcontroller';
@@ -14,6 +14,7 @@ import { AuthController } from '../services/controllers/authcontroller';
 export class CreateAccountComponent {
     user: UserModel = new UserModel();
     password: string = "";
+    ErrorMsg = signal("");
 
     //have this later lead to Stripe where the user can pay to sign up
     constructor(private router: Router, private _authController: AuthController) {}
@@ -29,9 +30,11 @@ export class CreateAccountComponent {
             next: (res) => {
                 if(res.status === 200) {
                     this.router.navigate(['/home'])
+                    this.ErrorMsg.set("");
                 }
             },
             error: (err) => {
+              this.ErrorMsg.set("Invalid credentials");
               console.log("ERROR: " + err)
             }
         });

@@ -5,6 +5,7 @@ import { SHARED_IMPORTS } from '../shared/shared-imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { UserController } from '../services/controllers/usercontroller';
 
 
 @Component({
