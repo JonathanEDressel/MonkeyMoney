@@ -1,25 +1,19 @@
-from flask import Blueprint, jsonify, request
-from datetime import datetime
+from flask import Blueprint, jsonify
 from Extensions import limiter
+import json
 import helper.Helper as DBHelper
 
 usr_bp = Blueprint("user", __name__)
 
-@usr_bp.route('/add', methods=['POST'])
-@limiter.limit("20 per minute")
-def add_user():
-    req = request.json
-    username = req.get('email', '').strip()
-    email = req.get('email', '').strip()
-    password = DBHelper.encrypt_password(req.get('userpassword', '').strip())
-    fname = req.get('firstname', '').strip()
-    lname = req.get('lastname', '').strip()
-    if DBHelper.has_email(email):
-        return jsonify({"message": "Email is invalid", "status": 404}), 404
-    if DBHelper.has_username(username):
-        return jsonify({"message": "Username is invalid", "status": 404}), 404
-    currDte = str(datetime.now())
-    DBHelper.insert_value("UserAcct", 
-                              ["Username","UserPassword", "FirstName","LastName","Email","CreatedDate"],
-                              [username, password,fname,lname,email,currDte])
-    return jsonify({"message": "User added", "status": 200}), 200
+# add internal user authentication
+    # check if they are site admin
+    # eventually do this in segments (1000 users at a time)
+@usr_bp.route('/users', methods=['GET'])
+@limiter.limit("30 per minute")
+def get_users():
+    try:
+        sql = "SELECT Username, FirstName, LastName, Email, PhoneNumber, CreatedDate, LastLogin FROM UserAcct;"
+        usrs = DBHelper.run_query(sql, None, fetch=True)
+        return jsonify({"message": usrs, "status": 200}), 200
+    except Exception as e:
+        return jsonify({"message": e, "statu": 400}), 400

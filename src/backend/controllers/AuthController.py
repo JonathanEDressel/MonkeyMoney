@@ -87,3 +87,4 @@ def create_account():
     except Exception as e:
         print(f"ERROR: {e}")
         return jsonify({"message": e, "status": 400}), 400
+    

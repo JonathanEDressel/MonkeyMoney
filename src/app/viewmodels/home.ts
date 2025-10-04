@@ -5,7 +5,8 @@ import { SHARED_IMPORTS } from '../shared/shared-imports';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { UserController } from '../services/controllers/usercontroller';
+import { UserData } from '../services/userdata';
+import { UserModel } from '../models/usermodel';
 
 
 @Component({
@@ -15,5 +16,15 @@ import { UserController } from '../services/controllers/usercontroller';
   styleUrl: '../styles/home.scss'
 })
 export class HomeComponent {
-    
+    users: UserModel[] = [];
+
+    constructor(private usrData: UserData) {}
+
+    ngOnInit(): void {
+      this.activate();
+    }
+
+    activate() {
+      this.usrData.getUsers();
+    }
 }
