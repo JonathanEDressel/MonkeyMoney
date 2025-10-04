@@ -1,0 +1,39 @@
+<style>
+    h3 {
+        /* background-color: white; */
+    }
+</style>
+<div class="row">
+    <nav class="nav justify-content-center">
+        @for (pg of portalPages; track pg) {
+            <a class="nav-link" href="{{pg.Route}}">{{pg.Title}}</a>
+        }
+    </nav>
+</div>
+<div class="row mb-4">
+    
+    <!-- <div class="col col-12">
+        <table class="table">
+            <thead>
+                @if(users.length > 0){
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Last Login</th>
+                }
+                @else {
+                    <span>No Users Available</span>
+                }
+            </thead>
+            <tbody>
+                    @for (usr of users; track usr) {
+                        <tr>
+                            <td>{{usr.Username}}</td>
+                            <td>{{usr.Email}}</td>
+                            <td>{{usr.LastLogin}}</td>
+                        </tr>
+                    } @empty {
+                    }
+            </tbody>
+        </table>
+    </div> -->
+</div>

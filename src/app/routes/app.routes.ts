@@ -1,14 +1,15 @@
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '../viewmodels/login'
 import { CreateAccountComponent } from '../viewmodels/createaccount';
-import { HomeComponent } from '../viewmodels/home';
-import { NgModule } from '@angular/core';
+import { MainComponet } from '../viewmodels/main';
+import { OverviewComponet } from '../viewmodels/portal/overview';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent },
+    { path: 'main', component: MainComponet },
     { path: 'createaccount', component: CreateAccountComponent },
-    { path: '', redirectTo: 'login', pathMatch: 'full' }
+    { path: 'overview', component: OverviewComponet},
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 // @NgModule({

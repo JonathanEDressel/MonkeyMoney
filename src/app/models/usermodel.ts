@@ -5,9 +5,12 @@ export class UserModel {
     Email = <string>("");
     PhoneNumber = <string>("");
     LastLogin = <string>("");
-    IsDemo = <string>("");
+    CreatedDate = <string>("");
+    IsDemo = <boolean>(false);
+    IsAdmin = <boolean>(false);
     AdminLevel = <string>("");
-    IsAdmin = <string>("");
+    ConfirmedEmail = <boolean>(false);
+    TwoFactor = <boolean>(false);
 
     constructor() {
         this.Username = "";
@@ -16,9 +19,12 @@ export class UserModel {
         this.Email = "";
         this.PhoneNumber = "";
         this.LastLogin = "";
-        this.IsDemo = "";
+        this.CreatedDate = "";
+        this.IsDemo = false;
+        this.IsAdmin = false;
         this.AdminLevel = "";
-        this.IsAdmin = "";
+        this.ConfirmedEmail = false;
+        this.TwoFactor = false;
     }
 
     getFullName() {
@@ -31,10 +37,13 @@ export class UserModel {
         this.LastName = data.LastName;
         this.Email = data.Email;
         this.PhoneNumber = data.PhoneNumber;
-        this.LastLogin = data.LastLogin;
-        this.IsDemo = data.IsDemo
-        this.AdminLevel = data.AdminLevel
-        this.IsAdmin = data.IsAdmin
+        this.LastLogin = (new Date(data.LastLogin)).toLocaleDateString();
+        this.CreatedDate = (new Date(data.CreatedDate)).toLocaleDateString();
+        this.IsDemo = data.IsDemo;
+        this.IsAdmin = data.IsAdmin;
+        this.AdminLevel = data.AdminLevel;
+        this.ConfirmedEmail = data.ConfirmedEmail;
+        this.TwoFactor = data.TwoFactor;
     }
 
     getData() {
@@ -45,9 +54,12 @@ export class UserModel {
             Email: this.Email,
             PhoneNumber: this.PhoneNumber,
             LastLogin: this.LastLogin,
+            CreatedDate: this.CreatedDate,
             IsDemo: this.IsDemo,
+            IsAdmin: this.IsAdmin,
             AdminLevel: this.AdminLevel,
-            IsAdmin: this.IsAdmin
+            ConfirmedEmail: this.ConfirmedEmail,
+            TwoFactor: this.TwoFactor,
         };
     }
 }
