@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: '../../styles/overview.scss'
 })
 
-export class OverviewComponet {
+export class OverviewComponent {
 
 }
