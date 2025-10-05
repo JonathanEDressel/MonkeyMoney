@@ -6,12 +6,12 @@
 <div class="row">
     <nav class="nav justify-content-center">
         @for (pg of portalPages; track pg) {
-            <a class="nav-link" href="{{pg.Route}}">{{pg.Title}}</a>
+            <a class="nav-link" [class.active]="selectedPage === pg.Id" (click)="setPage(pg)" [routerLink]="pg.Route" >{{pg.Title}}</a>
         }
     </nav>
 </div>
 <div class="row mb-4">
-    
+
     <!-- <div class="col col-12">
         <table class="table">
             <thead>
