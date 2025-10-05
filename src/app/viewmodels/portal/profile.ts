@@ -4,17 +4,17 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'overview-root',
   imports: [FormsModule],
-  templateUrl: '../../views/portal/overview.html',
-  styleUrl: '../../styles/portal/overview.scss'
+  templateUrl: '../../views/portal/profile.html',
+  styleUrl: '../../styles/portal/profile.scss'
 })
 
-export class OverviewComponent {
+export class ProfileComponent {
     ngOnInit(): void {
         this.activate();
     }
 
     activate() {
-        console.log('overview tab called');
+        console.log('profile tab called');
     }
 
 }

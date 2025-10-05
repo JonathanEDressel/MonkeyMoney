@@ -2,19 +2,18 @@ import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'overview-root',
+  selector: 'history-root',
   imports: [FormsModule],
-  templateUrl: '../../views/portal/overview.html',
-  styleUrl: '../../styles/portal/overview.scss'
+  templateUrl: '../../views/portal/history.html',
+  styleUrl: '../../styles/portal/history.scss'
 })
 
-export class OverviewComponent {
+export class HistoryComponent {
     ngOnInit(): void {
         this.activate();
     }
 
     activate() {
-        console.log('overview tab called');
+        console.log('history tab called');
     }
-
 }
