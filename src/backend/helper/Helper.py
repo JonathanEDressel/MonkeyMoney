@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 # import InitiateConnection
 import mysql.connector
 import bcrypt
+import uuid
 import os
 
 load_dotenv()
@@ -150,3 +151,7 @@ def check_passwords(plain_pass: str, hashed_pass: bytes):
         return False
     except Exception as e:
         print(f"ERROR check_passwords(): {e}")
+        
+def create_uuid():
+    new_uuid = str(uuid.uuid4()).hex
+    return new_uuid

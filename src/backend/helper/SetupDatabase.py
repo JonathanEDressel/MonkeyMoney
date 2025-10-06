@@ -9,6 +9,7 @@ def validate_db():
                     "FirstName VARCHAR(50), " \
                     "LastName VARCHAR(50), " \
                     "UserPassword VARCHAR(255), " \
+                    "UUID VARCHAR(100), " \
                     "Email VARCHAR(100) UNIQUE, " \
                     "PhoneNumber VARCHAR(20) UNIQUE, " \
                     "CreatedDate DATETIME, " \
