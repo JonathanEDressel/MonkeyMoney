@@ -13,13 +13,14 @@ def has_admin():
                                 ("Admin", "jonathanedressel@gmail.com"), 
                                 True)
         if not res:
+            adm_uuid = DBHelper.create_uuid()
             sql = """
             INSERT INTO UserAcct
-            (Username, UserPassword, FirstName, LastName, Email, CreatedDate,
+            (Username, UserPassword, UUID, FirstName, LastName, Email, CreatedDate,
             ConfirmedEmail, TwoFactor, AdminLevel, IsAdmin, IsDemo)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
-            params = ("Admin", h, "Jonathan", "Dressel", "jonathanedressel@gmail.com", currDte,
+            params = ("Admin", h, adm_uuid, "Jonathan", "Dressel", "jonathanedressel@gmail.com", currDte,
                     1, 0, "Site", 1, 0)
             DBHelper.run_query(sql, params)
     except Exception as e:
@@ -75,10 +76,11 @@ def create_account():
         if usr:
             return jsonify({"message": "Failed to create user account", "status": 409}), 409
 
+        adm_uuid = DBHelper.create_uuid()
         hashedPassword = DBHelper.encrypt_password(password)
-        sql = f"INSERT INTO UserAcct (Username, Email, FirstName, LastName, UserPassword, PhoneNumber, CreatedDate) " \
-            "VALUES(%s, %s, %s, %s, %s, %s, %s);"
-        vars = (username, username, fname, lname, hashedPassword, phonenumber, datetime.now())
+        sql = f"INSERT INTO UserAcct (Username, Email, FirstName, LastName, UserPassword, UUID, PhoneNumber, CreatedDate) " \
+            "VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
+        vars = (username, username, fname, lname, hashedPassword, adm_uuid, phonenumber, datetime.now())
         res = DBHelper.run_query(sql, vars, fetch=False)
         if not res:
             return jsonify({"message": "Failed to create user account", "status": 400}), 400
