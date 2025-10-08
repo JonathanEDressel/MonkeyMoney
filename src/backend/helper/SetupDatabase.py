@@ -2,7 +2,7 @@ import controllers.AuthController as AuthController
 import helper.Helper as DBHelper
 
 def validate_db():
-    print("Setting up database...")
+    print("Setting up databases...")
     useracct_created = DBHelper.create_table("UserAcct", "" \
                     "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
                     "Username VARCHAR(50) UNIQUE, " \
@@ -22,3 +22,11 @@ def validate_db():
     if useracct_created:
         print("Creating admin user")
         AuthController.has_admin()
+        
+    DBHelper.create_table("ErrorLog", "" \
+        "(ERROR_Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "EventTimeStamp DATETIME, " \
+        "EvenText VARCHAR(100), " \
+        "Detail LONGBLOB, " \
+        "Parameters LONGBLOB, " \
+        "Username VARCHAR(100))")
