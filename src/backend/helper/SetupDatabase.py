@@ -30,3 +30,20 @@ def validate_db():
         "Detail LONGBLOB, " \
         "Parameters LONGBLOB, " \
         "Username VARCHAR(100))")
+    
+    DBHelper.create_table("EventLog", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "EventTimeStamp DATETIME, " \
+        "EvenText VARCHAR(100), " \
+        "Source VARCHAR(100), " \
+        "EventType VARCHAR(100), " \
+        "EventUser VARCHAR(100))")
+    
+    DBHelper.create_table("EmailLog", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "SentTime DATETIME, " \
+        "SentFrom VARCHAR(100), " \
+        "Subject VARCHAR(100), " \
+        "Body LONGBLOB, " \
+        "Reason VARCHAR(100), " \
+        "Duration SMALLINT  DEFAULT 1)")
