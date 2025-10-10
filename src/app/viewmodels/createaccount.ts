@@ -29,7 +29,7 @@ export class CreateAccountComponent {
         .subscribe({
             next: (res) => {
                 if(res.status === 200) {
-                    this.router.navigate(['/home'])
+                    this.router.navigate(['/main'])
                     this.ErrorMsg.set("");
                 }
             },
