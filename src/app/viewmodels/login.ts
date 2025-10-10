@@ -25,18 +25,20 @@ export class LoginComponent {
   }
 
   login() {
-    this._authController.login(this.UserEmail, this.UserPassword)
-      .subscribe({
-            next: (res) => {
-                if(res.status === 200) {
-                    this.router.navigate(['/main'])
-                    this.ErrorMsg.set("");
-                }
-            },
-            error: (err) => {
-              this.ErrorMsg.set("Invalid credentials");
-              console.log("ERROR: " + err, this.ErrorMsg)
-            }
-        });
+    this._authController.login(this.UserEmail, this.UserPassword).subscribe({
+        next: (res) => {
+          console.log('User logged in');
+          localStorage.setItem('jwt', res.token);
+          this.router.navigate(['/main']);
+          // if(res.status === 200) {
+          //     this.router.navigate(['/main'])
+          //     this.ErrorMsg.set("");
+          // }
+        },
+        error: (err) => {
+          this.ErrorMsg.set("Invalid credentials");
+          console.log("ERROR: " + err, this.ErrorMsg)
+        }
+      });
   }
 }

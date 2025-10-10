@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from datetime import datetime
 from Extensions import limiter
 import helper.Helper as DBHelper
+import helper.Security as Security
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -36,7 +37,7 @@ def user_profile():
         if not username or not password:
             return jsonify({"message": "Please enter a username and password", "status": 400}), 400
         
-        sql = f"SELECT UserPassword FROM UserAcct WHERE Username=%s or Email=%s"
+        sql = f"SELECT UserPassword, Username, UUID FROM UserAcct WHERE Username=%s or Email=%s"
         vars = (username, username)
         usr = DBHelper.run_query(sql, vars, True)
         if not usr:
@@ -46,12 +47,15 @@ def user_profile():
         if isinstance(usrPWHash, str):
             usrPWHash = usrPWHash.encode('utf-8')
 
-        if(DBHelper.check_passwords(password, usrPWHash)):
+        token = Security.create_jwt(usr[0]['UUID'], usr[0]['Username'])
+        print(token)
+        if (DBHelper.check_passwords(password, usrPWHash)) and (token is not None):
             currDte = str(datetime.now())
             updatedLogin = DBHelper.update_value("UserAcct", "LastLogin", currDte, "Username", username)
             if not updatedLogin:
                 DBHelper.update_value("UserAcct", "LastLogin", currDte, "Email", username)
-            return jsonify({"message": "Login successful", "status": 200}), 200
+
+            return jsonify({"token": token}), 200
         return jsonify({"message": "Invalid login credentials", "status": 409}), 409
     except Exception as e:
         print(f"ERROR: {e}")
