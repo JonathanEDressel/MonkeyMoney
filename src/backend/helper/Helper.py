@@ -153,5 +153,5 @@ def check_passwords(plain_pass: str, hashed_pass: bytes):
         print(f"ERROR check_passwords(): {e}")
         
 def create_uuid():
-    new_uuid = str(uuid.uuid4()).hex
+    new_uuid = str(uuid.uuid4())
     return new_uuid

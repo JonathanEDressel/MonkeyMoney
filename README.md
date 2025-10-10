@@ -14,7 +14,7 @@ Creating a Angular app to learn more about login authentication, web security an
 
 ## Running Front-End:
 1) Navigate to root folder
-2) Run "npm start"
+2) Run "npm start" (assuming node.js is installed. If not, install here https://nodejs.org/en)
 3) Open in the local browser
 
 ## .env Variable Setup
@@ -27,7 +27,7 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Send login info to db</s>
     * <s>Add error message</s>
     * Add JWT tokens to handle user session
-        * Create field to store UUID for user_id
+        * <s>Create field to store UUID for user_id</s>
     * <s>Create sign up page</s>
     * Add payment page
     * Add forgot password page

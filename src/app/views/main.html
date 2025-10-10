@@ -4,11 +4,16 @@
     }
 </style>
 <div class="row">
-    <nav class="nav justify-content-center">
-        @for (pg of portalPages; track pg) {
-            <a class="nav-link" [class.active]="selectedPage === pg.Id" (click)="setPage(pg)" [routerLink]="pg.Route" >{{pg.Title}}</a>
-        }
-    </nav>
+    <div class="col col-10 text-end">
+        <nav class="nav justify-content-center">
+            @for (pg of portalPages; track pg) {
+                <a class="nav-link" [class.active]="selectedPage === pg.Id" (click)="setPage(pg)" [routerLink]="pg.Route" >{{pg.Title}}</a>
+            }
+        </nav>
+    </div>
+    <div class="col col-2">
+        
+    </div>
 </div>
 <div class="row mb-4" style="height: 170%;">
     @if(getPage) {
