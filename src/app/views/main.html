@@ -1,18 +1,31 @@
 <style>
-    h3 {
-        /* background-color: white; */
+    .active {
+        font-size: larger;
+        background-color: darkblue;
+        border-radius: 15px;;
     }
 </style>
 <div class="row">
-    <div class="col col-10 text-end">
-        <nav class="nav justify-content-center">
-            @for (pg of portalPages; track pg) {
-                <a class="nav-link" [class.active]="selectedPage === pg.Id" (click)="setPage(pg)" [routerLink]="pg.Route" >{{pg.Title}}</a>
-            }
+    <div class="col col-12 text-center">
+        <nav class="navbar navbar-expand-lg" style="background: linear-gradient(90deg,#007bff,#6610f2);">
+            <div class="container">
+                <a class="navbar-brand text-white fw-bold" href="/main">MonkeyMoney</a>
+                <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav3">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="nav3">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        @for (pg of portalPages; track pg) {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" (click)="setPage(pg)" [routerLink]="pg.Route" [class.active]="selectedPage === pg.Id" >
+                                {{pg.Title}}
+                            </a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
         </nav>
-    </div>
-    <div class="col col-2">
-        
     </div>
 </div>
 <div class="row mb-4" style="height: 170%;">
