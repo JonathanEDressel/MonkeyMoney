@@ -17,8 +17,7 @@ export class AuthController {
     }
 
     addUser(fname: string, lname: string, email: string, password: string, phonenumber: string) {
-        console.log(fname)
-        return this.http.post(`${this.apiURL}/signup`, 
+        return this.http.post<{ token: string }>(`${this.apiURL}/signup`, 
             { firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber },
             { observe: 'response' }
         )

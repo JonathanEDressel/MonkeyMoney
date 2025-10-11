@@ -28,6 +28,10 @@ def has_admin():
     except Exception as e:
         print(f"ERROR: {e}")
 
+def get_user_token(usrername, uuid):
+    token = Security.create_jwt(uuid, usrername)
+    return token
+
 @auth_bp.route('/login', methods=['POST'])
 @limiter.limit("20 per minute")
 def user_profile():
@@ -43,19 +47,16 @@ def user_profile():
         usr = DBHelper.run_query(sql, vars, True)
         if not usr:
             return jsonify({"message": "Invalid login credentials", "status": 400}), 400
-            
         usrPWHash = usr[0]['UserPassword']
         if isinstance(usrPWHash, str):
             usrPWHash = usrPWHash.encode('utf-8')
 
-        token = Security.create_jwt(usr[0]['UUID'], usr[0]['Username'])
-        print(f"TOEKN : {token}")
+        token = get_user_token([0]['UUID'], [0]['Username'])
         if (DBHelper.check_passwords(password, usrPWHash)) and (token is not None):
             currDte = str(datetime.now())
             updatedLogin = DBHelper.update_value("UserAcct", "LastLogin", currDte, "Username", username)
             if not updatedLogin:
                 DBHelper.update_value("UserAcct", "LastLogin", currDte, "Email", username)
-
             return jsonify({"token": token}), 200
         return jsonify({"message": "Invalid login credentials", "status": 409}), 409
     except Exception as e:
@@ -63,7 +64,6 @@ def user_profile():
         return jsonify({"message": e, "status": 400}), 400
     
 @auth_bp.route('/signup',methods=['POST'])
-@Security.requires_token
 @limiter.limit("5 per minute")
 def create_account():
     try:
@@ -88,10 +88,10 @@ def create_account():
             "VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
         vars = (username, username, fname, lname, hashedPassword, adm_uuid, phonenumber, datetime.now())
         res = DBHelper.run_query(sql, vars, fetch=False)
-        if not res:
+        token = get_user_token(username)
+        if not res or not token:
             return jsonify({"message": "Failed to create user account", "status": 400}), 400
-        return jsonify({"message": "User account created", "status": 200}), 200
-
+        return jsonify({"token": token}), 200
     except Exception as e:
         print(f"ERROR: {e}")
         return jsonify({"message": e, "status": 400}), 400
