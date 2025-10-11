@@ -51,7 +51,7 @@ def user_profile():
         if isinstance(usrPWHash, str):
             usrPWHash = usrPWHash.encode('utf-8')
 
-        token = get_user_token([0]['UUID'], [0]['Username'])
+        token = get_user_token(usr[0]['Username'], usr[0]['UUID'])
         if (DBHelper.check_passwords(password, usrPWHash)) and (token is not None):
             currDte = str(datetime.now())
             updatedLogin = DBHelper.update_value("UserAcct", "LastLogin", currDte, "Username", username)

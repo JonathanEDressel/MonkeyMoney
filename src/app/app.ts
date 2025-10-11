@@ -8,12 +8,10 @@ import { RouterOutlet } from '@angular/router';
   template: `
     <style>
       .main-body {
-        height: 90%;
-        background-color: lightgray;
-        border-radius: 5px;
+        border-radius: 15px;
       }
     </style>
-    <div class="container text-center main-body">
+    <div>
       <router-outlet></router-outlet>
     </div>
   `
