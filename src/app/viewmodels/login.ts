@@ -30,10 +30,6 @@ export class LoginComponent {
           console.log('User logged in');
           localStorage.setItem('jwt', res.token);
           this.router.navigate(['/main']);
-          // if(res.status === 200) {
-          //     this.router.navigate(['/main'])
-          //     this.ErrorMsg.set("");
-          // }
         },
         error: (err) => {
           this.ErrorMsg.set("Invalid credentials");
