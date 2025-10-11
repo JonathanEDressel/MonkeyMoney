@@ -16,10 +16,9 @@ export class AuthController {
         });
     }
 
-    addUser(fname: string, lname: string, email: string, password: string, phonenumber: string) {
-        return this.http.post<{ token: string }>(`${this.apiURL}/signup`, 
-            { firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber },
-            { observe: 'response' }
-        )
+    createAccount(fname: string, lname: string, email: string, password: string, phonenumber: string) {
+        return this.http.post<{ token: string }>(`${this.apiURL}/signup`, { 
+            firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber 
+        });
     }
 }

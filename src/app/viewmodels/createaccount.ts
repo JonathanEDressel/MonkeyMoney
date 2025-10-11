@@ -24,13 +24,12 @@ export class CreateAccountComponent {
     }
     
     createAccount() {
-      this._authController.addUser(this.user.FirstName, this.user.LastName, this.user.Email, this.password, this.user.PhoneNumber).subscribe({
+      this._authController.createAccount(this.user.FirstName, this.user.LastName, this.user.Email, this.password, this.user.PhoneNumber).subscribe({
         next: (res) => {
-          // if(res.status === 200) {
           localStorage.setItem('jwt', res.token);
           this.router.navigate(['/main'])
           this.ErrorMsg.set("");
-          // }
+          console.log("Account created");
         },
         error: (err) => {
           this.ErrorMsg.set("Invalid credentials");

@@ -23,7 +23,7 @@ export class LoginComponent {
   createAccount() {
     this.router.navigate(['/createaccount']);
   }
-
+  
   login() {
     this._authController.login(this.UserEmail, this.UserPassword).subscribe({
         next: (res) => {

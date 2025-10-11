@@ -88,7 +88,7 @@ def create_account():
             "VALUES(%s, %s, %s, %s, %s, %s, %s, %s);"
         vars = (username, username, fname, lname, hashedPassword, adm_uuid, phonenumber, datetime.now())
         res = DBHelper.run_query(sql, vars, fetch=False)
-        token = get_user_token(username)
+        token = get_user_token(username, adm_uuid)
         if not res or not token:
             return jsonify({"message": "Failed to create user account", "status": 400}), 400
         return jsonify({"token": token}), 200
