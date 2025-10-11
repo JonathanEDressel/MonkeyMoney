@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from datetime import datetime
 from Extensions import limiter
+# from helper.Security import requires_token, create_jwt
 import helper.Helper as DBHelper
 import helper.Security as Security
 
@@ -48,7 +49,7 @@ def user_profile():
             usrPWHash = usrPWHash.encode('utf-8')
 
         token = Security.create_jwt(usr[0]['UUID'], usr[0]['Username'])
-        print(token)
+        print(f"TOEKN : {token}")
         if (DBHelper.check_passwords(password, usrPWHash)) and (token is not None):
             currDte = str(datetime.now())
             updatedLogin = DBHelper.update_value("UserAcct", "LastLogin", currDte, "Username", username)
@@ -62,6 +63,7 @@ def user_profile():
         return jsonify({"message": e, "status": 400}), 400
     
 @auth_bp.route('/signup',methods=['POST'])
+@Security.requires_token
 @limiter.limit("5 per minute")
 def create_account():
     try:
