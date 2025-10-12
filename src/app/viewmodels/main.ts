@@ -21,10 +21,11 @@ export class MainComponent {
     
     selectedPage: number = 1;
     portalPages = [
-      { Id: 1, Title: 'Overview', Route: '/main', Visible: true, isSelected: Observable<false>, View: OverviewComponent },
-      { Id: 2, Title: 'History', Route: '/main', Visible: true, isSelected: Observable<false>, View: HistoryComponent },
-      { Id: 3, Title: 'Account', Route: '/main', Visible: true, isSelected: Observable<false>, View: AccountsComponent },
-      { Id: 4, Title: 'Profile', Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent }
+      { Id: 1, Title: 'Overview', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: OverviewComponent },
+      { Id: 2, Title: 'History', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: HistoryComponent },
+      { Id: 3, Title: 'Account', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: AccountsComponent },
+      { Id: 4, Title: 'Profile', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent },
+      { Id: 5, Title: '', class: "fa-solid fa-gear", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent }
     ];
 
     constructor(private usrData: UserData) {}
