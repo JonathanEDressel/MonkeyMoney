@@ -1,6 +1,5 @@
 <style>
     .active {
-        /* font-size: larger; */
         background-color: darkblue;
         border-radius: 15px;;
     }
@@ -9,10 +8,13 @@
         border-bottom: 2px solid white;
     }
 
-    .settings :hover {
+    .main {
+        border-radius: 15px; 
+        height: 60rem; 
+        background: linear-gradient(90deg,#007bff,#6610f2);
     }
 </style>
-<div class="continer">
+<div class="container main">
     <div class="row header">
         <div class="col col-12 text-center">
             <nav class="navbar navbar-expand-lg">
@@ -37,14 +39,11 @@
                     </a>
                 </div>
             </nav>
+        </div>
     </div>
+    <div class="row" >
+        @if(getPage) {
+            <ng-container [ngComponentOutlet]="getPage"></ng-container>
+        }
     </div>
-</div>
-<div class="row">
-    
-</div>
-<div class="row mb-4" style="height: 170%;">
-    @if(getPage) {
-        <ng-container [ngComponentOutlet]="getPage"></ng-container>
-    }
 </div>
