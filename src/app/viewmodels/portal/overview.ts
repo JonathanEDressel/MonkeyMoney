@@ -1,7 +1,14 @@
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartOptions } from 'chart.js';
+import { Chart, ChartDataset, ChartOptions, ChartType } from 'chart.js';
+
+interface ChartConfiguration {
+    datasets: ChartDataset[];
+    labels: string[];
+    options: ChartOptions;
+    type: ChartType;
+}
 
 @Component({
   selector: 'overview-root',
@@ -18,31 +25,33 @@ export class OverviewComponent {
     activate() {
         console.log('overview tab called');
     }
-    // months: string[] = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.'];
-    months = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-        datasets: [
-            {
-                label: 'Revenue',
-                data: [12, 19, 3, 5, 2],
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1,
-            },
-        ],
-    };
 
-    barData: ChartOptions = {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true },
+    chartData: ChartDataset[] = [
+        { data: [100, 200, 300, 230, 115], label: 'Series 1' },
+        { data: [10, 20, 30, 20, 15], label: 'Series 2' }
+    ];
+
+    chartLabels: string[] = ['Jan', 'Feb', 'Mar', "Apr', 'May"];
+
+    public mynewchart: ChartConfiguration = {
+        datasets: this.chartData,
+        labels: this.chartLabels,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    text: 'Net Worth',
+                    // color: Chart.defaults.color,
+                    align: 'center',
+                    display: true,
+                    fullSize: true,
+                    position: 'top',
+                    font: {
+                        size: 35
+                    }
+                }
+            }
         },
-  };
-
-    // barData: any[] = [
-    //     {
-    //         data: [4400,5500,18000,43000,78900,120000],
-    //         label: '$ Value'
-    //     }
-    // ]
+        type: 'bar'
+    }
 };
