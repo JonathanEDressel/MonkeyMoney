@@ -2,6 +2,32 @@ import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { Chart, ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(ChartDataLabels);
+
+const totalWealthPlugin = {
+    id: 'networth',
+    afterDraw(chart: Chart) {
+        const {ctx, chartArea: {top, bottom, left, right, width, height }} = chart;
+
+        const centX = left + width / 2;
+        const centY = top + height / 2;
+
+        ctx.save();
+        ctx.font = 'bold 22px Arial';
+        ctx.fillStyle = '#000',
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const total = (chart.data.datasets[0].data as number[]).reduce((a: number, b: number) => a + b, 0);
+        const format = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
+        ctx.fillText(format, centX, centY);
+        ctx.restore();
+    }
+}
+
+Chart.register(totalWealthPlugin);
 
 interface ChartConfiguration {
     datasets: ChartDataset[];
@@ -18,6 +44,10 @@ interface ChartConfiguration {
 })
 
 export class OverviewComponent {
+    constructor() {
+
+    }
+
     ngOnInit(): void {
         this.activate();
     }
@@ -27,31 +57,89 @@ export class OverviewComponent {
     }
 
     chartData: ChartDataset[] = [
-        { data: [100, 200, 300, 230, 115], label: 'Series 1' },
-        { data: [10, 20, 30, 20, 15], label: 'Series 2' }
+        { 
+            data: [ 16012, 600, 23310, 7835, 1538] , 
+            label: ' Value',
+            hoverOffset: 4
+        }
     ];
 
-    chartLabels: string[] = ['Jan', 'Feb', 'Mar', "Apr', 'May"];
+    chartLabels: string[] = ['Savings', 'Checking', '401(k)', 'Roth IRA', 'Taxable'];
 
     public mynewchart: ChartConfiguration = {
         datasets: this.chartData,
         labels: this.chartLabels,
         options: {
             responsive: true,
+            layout: {
+                padding: {
+                    top: 80,
+                    bottom: 50
+                },
+            },
             plugins: {
+                legend: {
+                    position: 'bottom',
+                    align: 'start',
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(ctx) {
+                            var res = ctx.dataset.label || '';
+                            if (res)
+                                res += ': ';
+                            if(ctx.parsed !== null)
+                                res += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(ctx.parsed);
+                            return res;
+                        }
+                    }
+                },
                 title: {
-                    text: 'Net Worth',
-                    // color: Chart.defaults.color,
-                    align: 'center',
-                    display: true,
-                    fullSize: true,
-                    position: 'top',
-                    font: {
-                        size: 35
+                    // text: 'Net Worth',
+                    // color: 'black',
+                    // align: 'center',
+                    // display: false,
+                    // fullSize: true,
+                    // position: 'top',
+                    // font: {
+                    //     size: 35
+                    // },
+                    // padding: {
+                    //     top: 0,
+                    //     bottom: 35
+                    // }
+                },
+                datalabels: {
+                    labels: {
+                        value: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 13
+                            },
+                            borderWidth: 1,
+                            borderColor: '#fff',
+                            borderRadius: 4,
+                            backgroundColor: '#0674e9',
+                            align: 'end',
+                            anchor: 'end',
+                            offset: 8,
+                            clip: false,
+                            formatter: (val, ctx) => {
+                                var res = (ctx.chart.data.labels ? ctx.chart.data.labels[ctx.dataIndex] : '') + '\n';
+                                res += new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD',
+                                    maximumFractionDigits: 0
+                                }).format(val);
+                                return res;
+                            }
+                        }
                     }
                 }
             }
         },
-        type: 'bar'
+        type: 'doughnut'
     }
 };

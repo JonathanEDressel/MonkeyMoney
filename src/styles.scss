@@ -1,9 +1,10 @@
 hr {
-    border: 2px dashed white;
+    border: 2px dashed black;
 }
 
 canvas {
-    background-color: white;
+    background-color: transparent;
+    border-radius: 15px;
 }
 
 .larger-canvas {
