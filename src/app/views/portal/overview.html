@@ -1,7 +1,22 @@
 <h3 class="text-start" style="color: black;">Accounts</h3>
 <div class="row mt-4 d-flex justify-content-center">
     <div class="col col-4">
-        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="mynewchart.datasets" [labels]="mynewchart.labels" [options]="mynewchart.options" [type]="mynewchart.type"> </canvas>
+        <canvas id="networthchart" class="larger-canvas" style="height: 400px;" baseChart [datasets]="netWorthOverviewChart.datasets" [labels]="netWorthOverviewChart.labels" [options]="netWorthOverviewChart.options" [type]="netWorthOverviewChart.type"> </canvas>
     </div>
 </div>
 <hr />
+
+<div class="row mt-4 d-flex justify-content-center">
+    <div class="col col-3">
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+    </div>
+    <div class="col col-3">
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+    </div>
+    <div class="col col-3">
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+    </div>
+    <div class="col col-3">
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+    </div>
+</div>

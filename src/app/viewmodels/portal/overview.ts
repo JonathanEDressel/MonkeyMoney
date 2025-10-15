@@ -7,10 +7,12 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 Chart.register(ChartDataLabels);
 
 const totalWealthPlugin = {
-    id: 'networth',
+    id: 'networthchart',
     afterDraw(chart: Chart) {
-        const {ctx, chartArea: {top, bottom, left, right, width, height }} = chart;
+        // if (!chart.options.plugins?.networthChartEnabled)
+            // return;
 
+        const {ctx, chartArea: {top, bottom, left, right, width, height }} = chart;
         const centX = left + width / 2;
         const centY = top + height / 2;
 
@@ -27,7 +29,7 @@ const totalWealthPlugin = {
     }
 }
 
-Chart.register(totalWealthPlugin);
+// Chart.register(totalWealthPlugin);
 
 interface ChartConfiguration {
     datasets: ChartDataset[];
@@ -66,7 +68,23 @@ export class OverviewComponent {
 
     chartLabels: string[] = ['Savings', 'Checking', '401(k)', 'Roth IRA', 'Taxable'];
 
-    public mynewchart: ChartConfiguration = {
+    accountChart: ChartConfiguration = {
+        datasets: this.chartData,
+        labels: this.chartLabels,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom', 
+                    align: 'start',
+                    display: true,
+                }
+            }
+        },
+        type: 'line'
+    };
+
+    netWorthOverviewChart: ChartConfiguration = {
         datasets: this.chartData,
         labels: this.chartLabels,
         options: {
@@ -78,6 +96,7 @@ export class OverviewComponent {
                 },
             },
             plugins: {
+                // networthChartEnabled: true,
                 legend: {
                     position: 'bottom',
                     align: 'start',
@@ -94,21 +113,6 @@ export class OverviewComponent {
                             return res;
                         }
                     }
-                },
-                title: {
-                    // text: 'Net Worth',
-                    // color: 'black',
-                    // align: 'center',
-                    // display: false,
-                    // fullSize: true,
-                    // position: 'top',
-                    // font: {
-                    //     size: 35
-                    // },
-                    // padding: {
-                    //     top: 0,
-                    //     bottom: 35
-                    // }
                 },
                 datalabels: {
                     labels: {
@@ -143,3 +147,5 @@ export class OverviewComponent {
         type: 'doughnut'
     }
 };
+
+new Chart(document.getElementById('networthchart') as HTMLCanvasElement, netWorthOverviewChart);
