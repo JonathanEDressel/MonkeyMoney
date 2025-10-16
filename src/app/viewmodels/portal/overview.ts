@@ -1,10 +1,8 @@
 import { FormsModule } from '@angular/forms';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
-import { Chart, ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-Chart.register(ChartDataLabels);
 
 const totalWealthPlugin = {
     id: 'networthchart',
@@ -29,26 +27,16 @@ const totalWealthPlugin = {
     }
 }
 
-// Chart.register(totalWealthPlugin);
-
-interface ChartConfiguration {
-    datasets: ChartDataset[];
-    labels: string[];
-    options: ChartOptions;
-    type: ChartType;
-}
-
 @Component({
   selector: 'overview-root',
-  imports: [FormsModule, BaseChartDirective],
+  standalone: true,
+  imports: [BaseChartDirective],
   templateUrl: '../../views/portal/overview.html',
   styleUrl: '../../styles/portal/overview.scss'
 })
 
-export class OverviewComponent {
-    constructor() {
-
-    }
+export class OverviewComponent implements AfterViewInit {
+    @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
     ngOnInit(): void {
         this.activate();
@@ -58,7 +46,10 @@ export class OverviewComponent {
         console.log('overview tab called');
     }
 
-    chartData: ChartDataset[] = [
+    ngAfterViewInit() {
+    }
+
+    chartData: ChartDataset<'doughnut'>[] = [
         { 
             data: [ 16012, 600, 23310, 7835, 1538] , 
             label: ' Value',
@@ -66,27 +57,47 @@ export class OverviewComponent {
         }
     ];
 
+    lineChartLabels: string[] = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.']
     chartLabels: string[] = ['Savings', 'Checking', '401(k)', 'Roth IRA', 'Taxable'];
 
-    accountChart: ChartConfiguration = {
-        datasets: this.chartData,
-        labels: this.chartLabels,
+    lineChartData: ChartDataset<'line'>[] = [
+        { 
+            data: [ 150, 200, 230, 300, 340, 450, 560 ] , 
+            label: ' Value'
+        }
+    ];
+
+    accountChart: ChartConfiguration<'line'> = {
+        type: 'line',
+        
+        data: {
+            datasets: this.lineChartData,
+            labels: this.lineChartLabels
+        },
         options: {
             responsive: true,
             plugins: {
-                legend: {
-                    position: 'bottom', 
-                    align: 'start',
+                title: {
+                    text: 'Roth IRA',
                     display: true,
+                    font: {
+                        weight: 'bold',
+                        size: 20
+                    }
+                },
+                legend: {
+                    display: false,
                 }
             }
-        },
-        type: 'line'
+        }
     };
 
-    netWorthOverviewChart: ChartConfiguration = {
-        datasets: this.chartData,
-        labels: this.chartLabels,
+    netWorthOverviewChart: ChartConfiguration<'doughnut'> = {
+        type: 'doughnut',
+        data: {
+            datasets: this.chartData,
+            labels: this.chartLabels
+        },
         options: {
             responsive: true,
             layout: {
@@ -144,8 +155,9 @@ export class OverviewComponent {
                 }
             }
         },
-        type: 'doughnut'
+        plugins: [ChartDataLabels, totalWealthPlugin]
     }
-};
 
-new Chart(document.getElementById('networthchart') as HTMLCanvasElement, netWorthOverviewChart);
+
+    // new Chart(document.getElementById('networthchart') as HTMLCanvasElement, netWorthOverviewChart);
+};

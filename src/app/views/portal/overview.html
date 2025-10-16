@@ -1,22 +1,23 @@
-<h3 class="text-start" style="color: black;">Accounts</h3>
+<h3 class="text-start mt-2" style="color: black;">Net Worth</h3>
 <div class="row mt-4 d-flex justify-content-center">
     <div class="col col-4">
-        <canvas id="networthchart" class="larger-canvas" style="height: 400px;" baseChart [datasets]="netWorthOverviewChart.datasets" [labels]="netWorthOverviewChart.labels" [options]="netWorthOverviewChart.options" [type]="netWorthOverviewChart.type"> </canvas>
+        <canvas id="networthchart" class="larger-canvas" style="height: 400px;" baseChart [data]="netWorthOverviewChart.data" [plugins]="netWorthOverviewChart.plugins!" [options]="netWorthOverviewChart.options" [type]="netWorthOverviewChart.type"> </canvas>
     </div>
 </div>
 <hr />
 
+<h3 class="text-start" style="color: black;">Retirement Accounts</h3>
 <div class="row mt-4 d-flex justify-content-center">
     <div class="col col-3">
-        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [data]="accountChart.data" [options]="accountChart.options" [type]="accountChart.type"> </canvas>
     </div>
     <div class="col col-3">
-        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [data]="accountChart.data" [options]="accountChart.options!" [type]="accountChart.type"> </canvas>
     </div>
     <div class="col col-3">
-        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [data]="accountChart.data" [options]="accountChart.options!" [type]="accountChart.type"> </canvas>
     </div>
     <div class="col col-3">
-        <canvas class="larger-canvas" style="height: 400px;" baseChart [datasets]="accountChart.datasets" [labels]="accountChart.labels" [options]="accountChart.options" [type]="'line'"> </canvas>
+        <canvas class="larger-canvas" style="height: 400px;" baseChart [data]="accountChart.data" [options]="accountChart.options!" [type]="accountChart.type"> </canvas>
     </div>
 </div>
