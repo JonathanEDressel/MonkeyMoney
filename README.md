@@ -34,6 +34,8 @@ Creating a Angular app to learn more about login authentication, web security an
     * Add email validation
     * Implement SSO
 * Setup the initial user db
+    * Database design:
+        * https://drawsql.app/teams/monkeymoney/diagrams/monkey-money
     * <s>Create initial db</s>
     * <s>Insert admin user</s>
     * <s>Create route for login</s>
