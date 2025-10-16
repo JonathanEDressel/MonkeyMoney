@@ -42,6 +42,8 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Add password hasing/salting</s>
     * <s>Add rate limiting</s>
     * <s>Add sql injection checks</s>
+    * Add AccountHistory table
+    * Add indexing to some tables
 * Error Logging DB:
     * Add error logging db
     * Add error logging table
