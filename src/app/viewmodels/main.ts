@@ -9,6 +9,7 @@ import { OverviewComponent } from './portal/overview';
 import { HistoryComponent } from './portal/userlogs';
 import { AccountsComponent } from './portal/accounts';
 import { ProfileComponent } from './portal/profile';
+import { AuthController } from '../services/controllers/authcontroller';
 
 @Component({
   selector: 'main-root',
@@ -28,22 +29,25 @@ export class MainComponent {
       { Id: 5, Title: '', class: "fa-solid fa-gear", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent }
     ];
 
-    constructor(private usrData: UserData) {}
+    constructor(private usrData: UserData, private _authController: AuthController) {}
     
     get getPage() {
       var page = this.portalPages.find(pg => this.selectedPage === pg.Id);
       return page?.View ?? null;
     }    
 
-    setPage(page: any) {
+    setPage(page: any): void {
       this.selectedPage = page.Id;
-      console.log(page.Title);
     }
 
     ngOnInit(): void {
     }
 
-    activate() {
+    activate(): void {
 
+    }
+
+    logout(): void {
+      this._authController.logout();
     }
 }

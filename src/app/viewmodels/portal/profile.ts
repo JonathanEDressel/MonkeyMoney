@@ -13,7 +13,7 @@ export class ProfileComponent {
         this.activate();
     }
 
-    activate() {
+    activate(): void {
         console.log('profile tab called');
     }
 

@@ -19,11 +19,11 @@ export class CreateAccountComponent {
     //have this later lead to Stripe where the user can pay to sign up
     constructor(private router: Router, private _authController: AuthController) {}
 
-    returnToLogin() {
+    returnToLogin(): void {
       this.router.navigate(['/login']);
     }
     
-    createAccount() {
+    createAccount(): void {
       this._authController.createAccount(this.user.FirstName, this.user.LastName, this.user.Email, this.password, this.user.PhoneNumber).subscribe({
         next: (res) => {
           localStorage.setItem('jwt', res.token);

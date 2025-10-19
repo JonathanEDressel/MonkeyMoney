@@ -13,18 +13,18 @@ import { AuthController } from '../services/controllers/authcontroller';
 })
 export class LoginComponent {
   protected readonly title = signal('my-app');
-
+  
   UserPassword: string = "";
   UserEmail: string = "";
   ErrorMsg = signal("");
   
   constructor(private router: Router, private _authController: AuthController) {}
 
-  createAccount() {
+  createAccount(): void {
     this.router.navigate(['/createaccount']);
   }
   
-  login() {
+  login(): void {
     this._authController.login(this.UserEmail, this.UserPassword).subscribe({
         next: (res) => {
           console.log('User logged in');

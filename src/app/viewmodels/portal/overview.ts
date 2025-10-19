@@ -7,9 +7,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 const totalWealthPlugin = {
     id: 'networthchart',
     afterDraw(chart: Chart) {
-        // if (!chart.options.plugins?.networthChartEnabled)
-            // return;
-
         const {ctx, chartArea: {top, bottom, left, right, width, height }} = chart;
         const centX = left + width / 2;
         const centY = top + height / 2;
@@ -42,11 +39,10 @@ export class OverviewComponent implements AfterViewInit {
         this.activate();
     }
 
-    activate() {
-        console.log('overview tab called');
+    activate(): void {
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
     }
 
     chartData: ChartDataset<'doughnut'>[] = [
@@ -67,6 +63,7 @@ export class OverviewComponent implements AfterViewInit {
         }
     ];
 
+    //dummy data atm
     accountChart: ChartConfiguration<'line'> = {
         type: 'line',
         
@@ -92,6 +89,7 @@ export class OverviewComponent implements AfterViewInit {
         }
     };
 
+    //dummy data atm
     netWorthOverviewChart: ChartConfiguration<'doughnut'> = {
         type: 'doughnut',
         data: {
@@ -107,7 +105,6 @@ export class OverviewComponent implements AfterViewInit {
                 },
             },
             plugins: {
-                // networthChartEnabled: true,
                 legend: {
                     position: 'bottom',
                     align: 'start',
@@ -157,7 +154,4 @@ export class OverviewComponent implements AfterViewInit {
         },
         plugins: [ChartDataLabels, totalWealthPlugin]
     }
-
-
-    // new Chart(document.getElementById('networthchart') as HTMLCanvasElement, netWorthOverviewChart);
 };

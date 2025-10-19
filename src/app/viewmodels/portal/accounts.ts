@@ -13,7 +13,7 @@ export class AccountsComponent {
         this.activate();
     }
 
-    activate() {
+    activate(): void {
         console.log('account tab called');
     }
 }

@@ -13,7 +13,7 @@ export class HistoryComponent {
         this.activate();
     }
 
-    activate() {
+    activate(): void {
         console.log('history tab called');
     }
 }
