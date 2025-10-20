@@ -43,14 +43,15 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Add rate limiting</s>
     * <s>Add sql injection checks</s>
     * Add AccountHistory table
-    * Add indexing to some tables
+    * Add indexing to some tables (not sure which tables yet)
 * Error Logging DB:
     * Add error logging db
     * Add error logging table
     * Find way to log errors in the table when exceptions are hit
 * Page routing
     * <s>Route pages on one page</s>
-    * Add auth for pages when not logged in
+    * <s>Add auth for pages when not logged in</s>
+    * Add auth for admin pages
 * Misc. 
     * Create admin settings
     * <s>Switch to MySQL</s>
