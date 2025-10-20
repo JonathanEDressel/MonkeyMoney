@@ -23,6 +23,10 @@ export class LoginComponent {
   createAccount(): void {
     this.router.navigate(['/createaccount']);
   }
+
+  forgotPassword(): void {
+    this.router.navigate(['/forgotpassword'])
+  }
   
   login(): void {
     this._authController.login(this.UserEmail, this.UserPassword).subscribe({
