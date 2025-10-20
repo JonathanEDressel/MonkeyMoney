@@ -15,7 +15,8 @@ Creating a Angular app to learn more about login authentication, web security an
 ## Running Front-End:
 1) Navigate to root folder
 2) Run "npm start" (assuming node.js is installed. If not, install here https://nodejs.org/en)
-3) Open in the local browser
+3) Additional packages may need to be installed
+4) Open in the local browser
 
 ## .env Variable Setup
 * For creating a secret key, run: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
@@ -31,6 +32,7 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Create sign up page</s>
     * Add payment page
     * Add forgot password page
+    * Create email svc with Postmark
     * Add email validation
     * Implement SSO
 * Setup the initial user db

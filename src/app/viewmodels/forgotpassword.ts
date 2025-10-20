@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, signal } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -9,6 +10,24 @@ import { FormsModule } from '@angular/forms';
   styleUrl: '../styles/forgotpassword.scss'
 })
 
-export class ForgotPassword {
+export class ForgotPassword implements OnInit {
 
+  // codeForm: FormGroup | undefined;
+  userEmail: string = "";
+
+  constructor(private router: Router) {}
+  
+  ngOnInit(): void {
+    // this.codeForm = new FormGroup({
+    //   email: new FormControl('', [Validators.required, Validators.email]),
+    // });
+  }
+
+  returnToLogin(): void {
+    this.router.navigate(['/login']);
+  }
+
+  sendVerificationCode(): void {
+    console.log(this.userEmail);
+  }
 }
