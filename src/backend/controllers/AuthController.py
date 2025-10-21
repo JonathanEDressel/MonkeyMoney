@@ -28,8 +28,8 @@ def has_admin():
     except Exception as e:
         print(f"ERROR: {e}")
 
-def get_user_token(usrername, uuid):
-    token = Security.create_jwt(uuid, usrername)
+def get_user_token(username, uuid):
+    token = Security.create_jwt(uuid, username)
     return token
 
 @auth_bp.route('/login', methods=['POST'])

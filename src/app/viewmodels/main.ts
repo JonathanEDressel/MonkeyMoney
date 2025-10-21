@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { RouterLink } from "@angular/router";
 import { NgComponentOutlet } from '@angular/common';
 import { OverviewComponent } from './portal/overview';
-import { HistoryComponent } from './portal/userlogs';
+import { HistoryComponent } from './portal/history';
 import { AccountsComponent } from './portal/accounts';
 import { ProfileComponent } from './portal/profile';
 import { AuthController } from '../services/controllers/authcontroller';
