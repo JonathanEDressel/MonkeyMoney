@@ -13,4 +13,16 @@ def get_users():
     try:
         return _usrCtx.get_users()
     except Exception as e:
-        return jsonify({"message": e, "statu": 400}), 400
+        return jsonify({"message": e, "status": 400}), 400
+    
+def add_taxable_account():
+    try:
+        return _usrCtx.add_taxable_account()
+    except Exception as e:
+        return jsonify({"message": e, "status": 400}), 400
+    
+def add_personal_account():
+    try:
+        return _usrCtx.add_personal_account()
+    except Exception as e:
+        return jsonify({"message": e, "status": 400}), 400
