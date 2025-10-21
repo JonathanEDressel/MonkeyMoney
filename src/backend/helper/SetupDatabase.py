@@ -46,4 +46,26 @@ def validate_db():
         "Subject VARCHAR(100), " \
         "Body LONGBLOB, " \
         "Reason VARCHAR(100), " \
-        "Duration SMALLINT  DEFAULT 1)")
+        "Duration INTEGER)")
+    
+    DBHelper.create_table("BlockedIPs", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER, " \
+        "IPAddress VARCHAR(100), " \
+        "Notes VARCHAR(255), " \
+        "DateAdded DATETIME) ")
+    
+    DBHelper.create_table("ReportLog", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER, " \
+        "CreatedTime DATETIME, " \
+        "Duration INTEGER, " \
+        "Details VARCHAR(255) )")
+    
+    DBHelper.create_table("ReferralLog", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER, " \
+        "ReferralCode VARCHAR(100), " \
+        "UsersReferred LONGBLOB, " \
+        "MonthsDiscounted INTEGER, " \
+        "UsedReferralCode TINYINT DEFAULT 0)")
