@@ -56,7 +56,6 @@ def create_table(table, fields):
         print(f"Checking if {table} table exists.")
         connection = connect_to_db()
         cursor = connection.cursor()
-        
         cursor.execute("SHOW TABLES")
         exists = False
         for t in cursor:
@@ -66,7 +65,7 @@ def create_table(table, fields):
         
         if not exists:
             print(f"{table} table does not exist. Creating table...")
-            sql = f"CREATE TABLE {table} {fields};"
+            sql = f"CREATE TABLE IF NOT EXISTS {table} {fields};"
             run_query(sql)
         else:
             print(f"{table} table already exists")
