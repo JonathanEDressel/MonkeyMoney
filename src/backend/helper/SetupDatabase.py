@@ -24,9 +24,9 @@ def validate_db():
         AuthController.has_admin()
         
     DBHelper.create_table("ErrorLog", "" \
-        "(ERROR_Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
         "EventTimeStamp DATETIME, " \
-        "EvenText VARCHAR(100), " \
+        "EventText VARCHAR(100), " \
         "Detail LONGBLOB, " \
         "Parameters LONGBLOB, " \
         "Username VARCHAR(100))")
@@ -34,7 +34,7 @@ def validate_db():
     DBHelper.create_table("EventLog", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
         "EventTimeStamp DATETIME, " \
-        "EvenText VARCHAR(100), " \
+        "EventText VARCHAR(100), " \
         "Source VARCHAR(100), " \
         "EventType VARCHAR(100), " \
         "EventUser VARCHAR(100))")
@@ -50,22 +50,63 @@ def validate_db():
     
     DBHelper.create_table("BlockedIPs", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
-        "UserId INTEGER, " \
+        "UserId INTEGER NOT NULL, " \
         "IPAddress VARCHAR(100), " \
         "Notes VARCHAR(255), " \
-        "DateAdded DATETIME) ")
+        "DateAdded DATETIME, " \
+        "FOREIGN KEY (UserId) References UserAcct(Id))")
     
     DBHelper.create_table("ReportLog", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
-        "UserId INTEGER, " \
+        "UserId INTEGER NOT NULL, " \
         "CreatedTime DATETIME, " \
         "Duration INTEGER, " \
-        "Details VARCHAR(255) )")
+        "Details VARCHAR(255), " \
+        "FOREIGN KEY (UserId) References UserAcct(Id))")
     
     DBHelper.create_table("ReferralLog", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
-        "UserId INTEGER, " \
+        "UserId INTEGER NOT NULL, " \
         "ReferralCode VARCHAR(100), " \
         "UsersReferred LONGBLOB, " \
         "MonthsDiscounted INTEGER, " \
-        "UsedReferralCode TINYINT DEFAULT 0)")
+        "UsedReferralCode TINYINT DEFAULT 0, "\
+        "FOREIGN KEY (UserId) References UserAcct(Id))")
+    
+    DBHelper.create_table("PersonalAccounts", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER NOT NULL, " \
+        "Name VARCHAR(100), " \
+        "Type VARCHAR(100), " \
+        "CreatedDate DATETIME, " \
+        "FOREIGN KEY (UserId) References UserAcct(Id))")
+    
+    DBHelper.create_table("InvestmentAccounts", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER NOT NULL, " \
+        "Name VARCHAR(100), " \
+        "Type VARCHAR(100), " \
+        "CreatedDate DATETIME, " \
+        "Holdings LONGBLOB, " \
+        "FOREIGN KEY (UserId) References UserAcct(Id))")
+    
+    DBHelper.create_table("AccountHoldings", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "InvestmentId INTEGER NOT NULL, " \
+        "TickerSymbol VARCHAR(100), " \
+        "Shares FLOAT, " \
+        "FOREIGN KEY (InvestmentId) References InvestmentAccounts(Id))")
+    
+    DBHelper.create_table("InvestmentAccountHistory", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "AccountId INTEGER NOT NULL, " \
+        "RecordedDate DATETIME, " \
+        "Balance FLOAT, " \
+        "FOREIGN KEY (AccountId) References InvestmentAccounts(Id))")
+    
+    DBHelper.create_table("PersonalAccountHistory", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "AccountId INTEGER NOT NULL, " \
+        "RecordedDate DATETIME, " \
+        "Balance FLOAT, " \
+        "FOREIGN KEY (AccountId) References PersonalAccounts(Id))")
