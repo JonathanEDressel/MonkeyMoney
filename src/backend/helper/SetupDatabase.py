@@ -1,4 +1,4 @@
-import controllers.AuthController as AuthController
+import controllers.AuthDbContext as _authCtx
 import helper.Helper as DBHelper
 
 def validate_db():
@@ -21,7 +21,7 @@ def validate_db():
                     "IsAdmin TINYINT DEFAULT 0)")
     if useracct_created:
         print("Creating admin user")
-        AuthController.has_admin()
+        _authCtx.has_admin()
         
     DBHelper.create_table("ErrorLog", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \

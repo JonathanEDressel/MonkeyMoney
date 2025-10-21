@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify
 from Extensions import limiter
-import json
-import helper.Helper as DBHelper
+import controllers.UserDbContext as _usrCtx
 
 usr_bp = Blueprint("user", __name__)
 
@@ -12,8 +11,6 @@ usr_bp = Blueprint("user", __name__)
 @limiter.limit("30 per minute")
 def get_users():
     try:
-        sql = "SELECT Username, FirstName, LastName, Email, PhoneNumber, CreatedDate, LastLogin FROM UserAcct;"
-        usrs = DBHelper.run_query(sql, None, fetch=True)
-        return jsonify({"message": usrs, "status": 200}), 200
+        return _usrCtx.get_users()
     except Exception as e:
         return jsonify({"message": e, "statu": 400}), 400
