@@ -28,7 +28,6 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
-        console.log('jwt - ', localStorage.getItem('jwt'))
         const token = this.getToken();
         if (!token)
             return false;
