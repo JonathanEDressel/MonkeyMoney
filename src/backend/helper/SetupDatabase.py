@@ -18,6 +18,7 @@ def validate_db():
                     "LastLogin DATETIME, " \
                     "IsDemo TINYINT DEFAULT 0, " \
                     "AdminLevel VARCHAR(20), " \
+                    "LastReleaseVersion VARCHAR(100), " \
                     "IsAdmin TINYINT DEFAULT 0)")
     if useracct_created:
         print("Creating admin user")
@@ -50,11 +51,9 @@ def validate_db():
     
     DBHelper.create_table("BlockedIPs", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
-        "UserId INTEGER NOT NULL, " \
         "IPAddress VARCHAR(100), " \
         "Notes VARCHAR(255), " \
-        "DateAdded DATETIME, " \
-        "FOREIGN KEY (UserId) References UserAcct(Id))")
+        "DateAdded DATETIME)")
     
     DBHelper.create_table("ReportLog", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
@@ -110,3 +109,9 @@ def validate_db():
         "RecordedDate DATETIME, " \
         "Balance FLOAT, " \
         "FOREIGN KEY (AccountId) References PersonalAccounts(Id))")
+    
+    DBHelper.create_table("ReleaseNotes", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "Version VARCHAR(100), " \
+        "Notes VARCHAR(255), " \
+        "DateAdded DATETIME)")
