@@ -1,6 +1,5 @@
-from flask import Blueprint, jsonify
+from flask import jsonify
 from Extensions import limiter
-import json
 import helper.Helper as DBHelper
 
 def get_users():

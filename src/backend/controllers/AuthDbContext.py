@@ -75,3 +75,6 @@ def create_account(fname, lname, username, phonenumber, password):
     except Exception as e:
         print(f"ERROR: {e}")
         return jsonify({"message": e, "status": 400}), 400
+    
+def update_password():
+    print('placeholder')
