@@ -13,6 +13,7 @@ yarn-error.log
 
 # Firebase
 /firebase-debug.log
+/firebase
 *.local
 
 # IDEs and editors

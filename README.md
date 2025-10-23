@@ -18,9 +18,16 @@ Creating a Angular app to learn more about login authentication, web security an
 3) Additional packages may need to be installed
 4) Open in the local browser
 
-## .env Variable Setup
+## .env Variable Setup:
 * For creating a secret key, run: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 * Download MySQL and to set the database up
+
+## Publishing Changes to Live Site:
+* Setup firebase
+    * npm install -g firebase-tools
+* firebase login
+* npm run build
+* firebase deploy
 
 ## To-Do:
 * Create a login page
