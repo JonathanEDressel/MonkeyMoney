@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from datetime import datetime
 from Extensions import limiter
 import controllers.AuthDbContext as _authCtx
+import controllers.EmailDbContext as _emailCtx
 import helper.Helper as DBHelper
 import helper.Security as Security
 
@@ -36,3 +37,21 @@ def create_account():
         print(f"ERROR: {e}")
         return jsonify({"message": e, "status": 400}), 400
     
+@auth_bp.route("/forgotPassword", methods=['POST'])
+@limiter.limit("1 per minute")
+def forgot_password():
+    try:
+        req = request.json
+        useremail = str(req.get('email', '').strip())
+        if not useremail:
+            return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
+        
+        params = (useremail, useremail)
+        usr = DBHelper.run_query("SELECT Email FROM UserAcct Where Username = %s or Email = %s", params, True)
+        if not usr:
+            return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
+        
+        return _emailCtx.send_usr_email(useremail, "Two FA Passcode", "Passcode: 1234")
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"message": e, "status": 400}), 400
