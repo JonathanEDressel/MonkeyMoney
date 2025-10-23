@@ -44,14 +44,16 @@ def forgot_password():
         req = request.json
         useremail = str(req.get('email', '').strip())
         if not useremail:
-            return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
+            #tell them the email was sent even if they don't have an account. We don't want people to fish for user's emails
+            return jsonify({"message": "Email successfully sent!", "status": 200}), 200 
         
         params = (useremail, useremail)
         usr = DBHelper.run_query("SELECT Email FROM UserAcct Where Username = %s or Email = %s", params, True)
         if not usr:
             return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
         
-        return _emailCtx.send_usr_email(useremail, "Two FA Passcode", "Passcode: 1234")
+        otp = Security.generate_otp(6)
+        return _emailCtx.send_usr_email(useremail, "Two FA Passcode", f"Your one-time passcode: {otp}")
     except Exception as e:
         print(f"ERROR: {e}")
         return jsonify({"message": e, "status": 400}), 400

@@ -1,5 +1,6 @@
 from functools import wraps
 from flask import jsonify, request
+import random
 import jwt
 import datetime
 import os
@@ -47,6 +48,17 @@ def requires_token(f):
         return f(decoded, *args, **kwargs)
     return decorator
 
+def generate_otp(otp_len=6):
+    try:
+        if not isinstance(otp_len, int) or otp_len <= 0:
+            return jsonify({'error': 'generate_otp parameters are not valid' })
+        
+        min = 10 ** (otp_len - 1)
+        max = (10 ** otp_len) - 1
+        return random.randint(min, max)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({'error': 'Error generating OTP' })
 # @app.route("/protected", methods=["GET"])
 # @token_required
 # def protected(decoded):
