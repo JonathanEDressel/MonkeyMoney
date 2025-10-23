@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import { EmailValidator, FormsModule } from '@angular/forms';
 import { Component, NgModule, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { AuthController } from '../services/controllers/authcontroller';
+import { AuthData } from '../services/authdata';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,9 @@ export class LoginComponent {
   UserEmail: string = "";
   ErrorMsg = signal("");
   
-  constructor(private router: Router, private _authController: AuthController) {}
+  constructor(private router: Router, private _authData: AuthData) {
+    this.ErrorMsg = this._authData.ErrorMsg;
+  }
 
   createAccount(): void {
     this.router.navigate(['/createaccount']);
@@ -29,16 +31,6 @@ export class LoginComponent {
   }
   
   login(): void {
-    this._authController.login(this.UserEmail, this.UserPassword).subscribe({
-        next: (res) => {
-          console.log('User logged in');
-          localStorage.setItem('jwt', res.token);
-          this.router.navigate(['/main']);
-        },
-        error: (err) => {
-          this.ErrorMsg.set("Invalid credentials");
-          console.log("ERROR: " + err, this.ErrorMsg)
-        }
-      });
+    this._authData.login(this.UserEmail, this.UserPassword);
   }
 }

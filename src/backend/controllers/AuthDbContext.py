@@ -1,12 +1,49 @@
-from flask import jsonify
+from flask import jsonify, request
 from datetime import datetime
 from Extensions import limiter
 import helper.Helper as DBHelper
 import helper.Security as Security
+from models.UserModel import data_to_model
+import jwt
+import os
+
+SECRET_KEY=os.getenv("SECRET_KEY")
+ALGO_TO_USE=os.getenv("ALGO_TO_USE", "HS256")
 
 def get_user_token(username, uuid):
     token = Security.create_jwt(uuid, username)
     return token
+
+def get_current_user():
+    try:
+        authorized_user = request.headers.get("Authorization")
+        if not authorized_user:
+            return None
+        
+        sql = "SELECT Id, Username, FirstName, LastName, Email, PhoneNumber, CreatedDate, "\
+            "ConfirmedEmail, TwoFactor, LastLogin, IsDemo, AdminLevel, IsAdmin FROM UserAcct WHERE Username = %s"
+        token = authorized_user.split(" ")[1]
+        decoded_token = jwt.decode(token, SECRET_KEY, ALGO_TO_USE)
+        username = str(decoded_token['username'])
+        params = (username,)
+        usr = DBHelper.run_query(sql, params, True)
+        res = data_to_model(usr[0])
+        if res:
+            return res
+        return None
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return None
+
+def is_admin():
+    try:
+        auth_usr = get_current_user()
+        if not auth_usr:
+            return False
+        return auth_usr.IsAdmin
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return False    
 
 def has_admin():
     try:
@@ -36,7 +73,7 @@ def user_login(username, password):
         vars = (username, username)
         usr = DBHelper.run_query(sql, vars, True)
         if not usr:
-            return jsonify({"message": "Invalid login credentials", "status": 400}), 400
+            return jsonify({"result": "Invalid login credentials", "status": 400}), 400
         usrPWHash = usr[0]['UserPassword']
         if isinstance(usrPWHash, str):
             usrPWHash = usrPWHash.encode('utf-8')
@@ -48,11 +85,11 @@ def user_login(username, password):
             if not updatedLogin:
                 DBHelper.update_value("UserAcct", "LastLogin", currDte, "Email", username)
             return jsonify({"token": token}), 200
-        return jsonify({"message": "Invalid login credentials", "status": 409}), 409
+        return jsonify({"result": "Invalid login credentials", "status": 409}), 409
         
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
     
 def create_account(fname, lname, username, phonenumber, password):
     try:
@@ -60,7 +97,7 @@ def create_account(fname, lname, username, phonenumber, password):
         vars = (username, username)
         usr = DBHelper.run_query(sql, vars, True)
         if usr:
-            return jsonify({"message": "Failed to create user account", "status": 409}), 409
+            return jsonify({"result": "Failed to create user account", "status": 409}), 409
 
         adm_uuid = DBHelper.create_uuid()
         hashedPassword = DBHelper.encrypt_password(password)
@@ -70,11 +107,11 @@ def create_account(fname, lname, username, phonenumber, password):
         res = DBHelper.run_query(sql, vars, fetch=False)
         token = get_user_token(username, adm_uuid)
         if not res or not token:
-            return jsonify({"message": "Failed to create user account", "status": 400}), 400
+            return jsonify({"result": "Failed to create user account", "status": 400}), 400
         return jsonify({"token": token}), 200
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
     
 def update_password():
     print('placeholder')

@@ -11,18 +11,23 @@ export class UserData {
 
     constructor(private _userController: UserController) {}
 
-    getUsers(): Observable<UserModel[]> {
-    return this._userController.getUsers().pipe(
-      map((res: any) => {
-        if (res?.status === 200) {
-          return res.message.map((tmp: any) => {
-            const usr = new UserModel();
-            usr.assignData(tmp);
-            return usr;
-          });
-        }
-        return [];
-      })
-    );
+    users: UserModel[] = [];
+
+    getUsers(): void {
+      this._userController.getUsers().subscribe({
+        next: (res: any) => {
+          this.users.length = 0;
+          if(res.status === 200) {
+            var data = res.result;
+            for(var i = 0; i < data.length; i++) {
+              var usr = new UserModel();
+              usr.assignData(data[i]);
+              this.users.push(usr);
+            }
+            console.log('Users:', this.users)
+          }
+        },
+        error: (err) => console.error(err)
+    });
   }
 }
