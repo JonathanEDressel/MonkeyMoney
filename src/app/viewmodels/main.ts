@@ -23,7 +23,7 @@ export class MainComponent {
     }
 
     users: UserModel[] = [];
-
+    numbers$ = 1;
     selectedPage: number = 2;
 
     get user() {
@@ -52,6 +52,7 @@ export class MainComponent {
 
     ngOnInit(): void {
       this._usrData.getUser();
+      console.log('numbers$ - ', this.numbers$)
     }
 
     activate(): void {
