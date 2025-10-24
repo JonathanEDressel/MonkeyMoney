@@ -1,8 +1,6 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { UserModel } from "../models/usermodel";
 import { UserController } from "./controllers/usercontroller";
-import { Observable } from "rxjs";
-import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +10,7 @@ export class UserData {
     constructor(private _userController: UserController) {}
 
     users: UserModel[] = [];
+    user = signal(new UserModel()); //= new UserModel();
 
     getUsers(): void {
       this._userController.getUsers().subscribe({
@@ -28,6 +27,21 @@ export class UserData {
           }
         },
         error: (err) => console.error(err)
-    });
-  }
+      });
+    }
+    getUser(): void {
+      this._userController.getUser().subscribe({
+        next: (res: any) => {
+          this.user.set(new UserModel());
+          if(res.status === 200) {
+            var data = res.result;
+            var tmp = new UserModel();
+            tmp.assignData(data);
+            this.user.set(tmp);
+          }
+          console.log('User - ', this.user())
+        },
+        error: (err: any) => console.error(err)
+      })
+    }
 }

@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router, UrlTree } from "@angular/router";
-import { AuthService } from "../services/auth.services";
-import { AuthController } from "../services/controllers/authcontroller";
+import { AuthData } from "../services/authdata";
 
 @Injectable({ providedIn: 'root'})
 export class AuthGuard implements CanActivate {
-  constructor(private authServices: AuthService, private _authController: AuthController, private router: Router) {}
+  constructor(private _authData: AuthData, private router: Router) {}
 
   canActivate(): boolean | UrlTree {
-    if (this.authServices.isAuthenticated())
+    if (this._authData.isAuthenticated())
       return true;
     return this.router.createUrlTree(['/login']);
   }

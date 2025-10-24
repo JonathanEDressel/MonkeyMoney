@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, g
 from functools import wraps
 from dotenv import load_dotenv
 import random
@@ -24,7 +24,6 @@ def create_jwt(uuid, username):
         "exp": now + datetime.timedelta(minutes=120),
         "iat":now
     }
-    print("SECRET_KEY:",SECRET_KEY)
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGO_TO_USE)
     if isinstance(token, bytes):
         token = token.decode("utf-8")
@@ -47,8 +46,8 @@ def requires_token(f):
             return jsonify({'error': 'Token expired'}), 401
         except jwt.InvalidTokenError:
             return jsonify({'error': 'Invalid token'}), 401
-
-        return f(decoded, *args, **kwargs)
+        g.decoded_token = decoded
+        return f(*args, **kwargs)
     return decorator
 
 def generate_otp(otp_len=6):

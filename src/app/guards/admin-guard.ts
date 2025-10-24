@@ -1,15 +1,21 @@
 import { Injectable } from "@angular/core";
-import { AuthController } from "../services/controllers/authcontroller";
 import { CanActivate, Router, UrlTree } from "@angular/router";
+import { AuthData } from "../services/authdata";
+import { Observable } from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
-  constructor(private authController: AuthController, private router: Router) {}
+  constructor(private _authData: AuthData, private router: Router) {}
 
-  canActivate(): boolean | UrlTree {
-    if (this.authController.isAdmin()) {
-      return true;
-    }
-    return this.router.createUrlTree(['/login']);
+  canActivate(): Observable<boolean | UrlTree> {
+    return this._authData.isAdmin().pipe(
+      map(isAdmin => {
+        if (isAdmin)
+          return true;
+        this._authData.logout();
+        return this.router.createUrlTree(['/login']);
+      })
+    )
   }
 }

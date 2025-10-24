@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { EmailValidator, FormsModule } from '@angular/forms';
-import { Component, NgModule, signal } from '@angular/core';
+import { Component, NgModule, OnInit, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { AuthData } from '../services/authdata';
 
@@ -11,7 +11,7 @@ import { AuthData } from '../services/authdata';
   templateUrl: '../views/login.html',
   styleUrl: '../styles/login.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   protected readonly title = signal('my-app');
   
   UserPassword: string = "";
@@ -20,6 +20,10 @@ export class LoginComponent {
   
   constructor(private router: Router, private _authData: AuthData) {
     this.ErrorMsg = this._authData.ErrorMsg;
+  }
+
+  ngOnInit(): void {
+    this._authData.clearToken();
   }
 
   createAccount(): void {

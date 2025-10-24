@@ -13,8 +13,17 @@ def get_users():
     except Exception as e:
         return jsonify({"result": e, "status": 400}), 400
     
+def get_current_user():
+    try:
+        usr = _authDbCtx.get_current_user()
+        if not usr:        
+            return jsonify({"result": None, "status": 401}), 401
+        return jsonify({"result": usr, "status": 200}), 200
+    except Exception as e:
+        return jsonify({"result": e, "status": 400}), 400
+
 def add_taxable_account():
-    print("placeholder")
+    return jsonify({"result": "success", "status": 200}), 200
     
 def add_personal_account():
-    print("placeholder")
+    return jsonify({"result": "success", "status": 200}), 200

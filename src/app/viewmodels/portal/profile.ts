@@ -1,7 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { UserData } from '../../services/userdata';
-import { AuthData } from '../../services/authdata';
 
 @Component({
   selector: 'overview-root',
@@ -11,13 +10,13 @@ import { AuthData } from '../../services/authdata';
 })
 
 export class ProfileComponent implements OnInit {
-    constructor(private _usrDta: UserData, private _authDta: AuthData) {}
+    constructor(private _usrDta: UserData) {}
 
     ngOnInit(): void {
         // this.activate();
         //this is just for test purposes
         // this._usrDta.getUsers()
-        this._authDta.isAdmin()
+        // this._authSvc.isAdmin()
     }
 
     activate(): void {

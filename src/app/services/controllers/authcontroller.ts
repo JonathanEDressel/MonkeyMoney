@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable } from '@angular/core';
-import { AuthService } from '../auth.services';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthController {
-    constructor(private http: HttpClient, private authSvc: AuthService) {}
+    constructor(private http: HttpClient) {}
 
     private apiURL = 'http://127.0.0.1:5000/auth'
 
@@ -17,17 +17,13 @@ export class AuthController {
         });
     }
 
-    logout(): void {
-      this.authSvc.logout();
-    }
-
     createAccount(fname: string, lname: string, email: string, password: string, phonenumber: string) {
         return this.http.post<{ token: string }>(`${this.apiURL}/signup`, { 
             firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber 
         });
     }
 
-    isAdmin() {
+    isAdmin(): Observable<any> {
         return this.http.get<{token: string}>(`${this.apiURL}/isAdmin`);
     }
 }

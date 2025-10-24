@@ -11,6 +11,10 @@ export class UserController {
     private apiURL = 'http://127.0.0.1:5000/user'
 
     getUsers() {
-        return this.http.get<{token: string}>(`${this.apiURL}/users`)
+      return this.http.get<{token: string}>(`${this.apiURL}/users`);
+    }
+
+    getUser() {
+      return this.http.get<{token: string}>(`${this.apiURL}/user`);
     }
 }

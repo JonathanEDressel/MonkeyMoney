@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, g
 from helper.Security import requires_token
 from datetime import datetime
 from Extensions import limiter
@@ -60,10 +60,11 @@ def forgot_password():
         return jsonify({"result": e, "status": 400}), 400
     
 @auth_bp.route('/isAdmin', methods=['GET'])
-# @requires_token
 @limiter.limit("100 per minute")
-def get_users():
+@requires_token
+def is_admin():
     try:
+        # decoded = g.decoded_token
         res = _authCtx.is_admin()
         return jsonify({"result": res, "status": 200}), 200
     except Exception as e:
