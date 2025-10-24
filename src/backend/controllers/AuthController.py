@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from helper.Security import requires_token
 from datetime import datetime
 from Extensions import limiter
 import controllers.AuthDbContext as _authCtx
@@ -18,7 +19,7 @@ def user_login():
         return _authCtx.user_login(username, password)
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
     
 @auth_bp.route('/signup',methods=['POST'])
 @limiter.limit("5 per minute")
@@ -31,11 +32,11 @@ def create_account():
         phonenumber = req.get('phonenumber', '').strip()
         password = req.get('userpassword', '').strip()
         if not username or not password:
-            return jsonify({"message": "Please enter a valid username and password", "status": 400}), 400
+            return jsonify({"result": "Please enter a valid username and password", "status": 400}), 400
         return _authCtx.create_account(fname, lname, username, phonenumber, password)
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
     
 @auth_bp.route("/forgotPassword", methods=['POST'])
 @limiter.limit("1 per minute")
@@ -44,14 +45,26 @@ def forgot_password():
         req = request.json
         useremail = str(req.get('email', '').strip())
         if not useremail:
-            return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
+            #tell them the email was sent even if they don't have an account. We don't want people to fish for user's emails
+            return jsonify({"result": "Email successfully sent!", "status": 200}), 200 
         
         params = (useremail, useremail)
         usr = DBHelper.run_query("SELECT Email FROM UserAcct Where Username = %s or Email = %s", params, True)
         if not usr:
-            return jsonify({"message": "Please enter in a valid email", "status": 400}), 400
+            return jsonify({"result": "Please enter in a valid email", "status": 400}), 400
         
-        return _emailCtx.send_usr_email(useremail, "Two FA Passcode", "Passcode: 1234")
+        otp = Security.generate_otp(6)
+        return _emailCtx.send_usr_email(useremail, "Two FA Passcode", f"Your one-time passcode: {otp}")
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
+    
+@auth_bp.route('/isAdmin', methods=['GET'])
+# @requires_token
+@limiter.limit("100 per minute")
+def get_users():
+    try:
+        res = _authCtx.is_admin()
+        return jsonify({"result": res, "status": 200}), 200
+    except Exception as e:
+        return jsonify({"result": e, "status": 400}), 400

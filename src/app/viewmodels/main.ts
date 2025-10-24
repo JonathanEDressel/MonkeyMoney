@@ -10,6 +10,7 @@ import { HistoryComponent } from './portal/history';
 import { AccountsComponent } from './portal/accounts';
 import { ProfileComponent } from './portal/profile';
 import { AuthController } from '../services/controllers/authcontroller';
+import { AdminComponent } from './admin/admin';
 
 @Component({
   selector: 'main-root',
@@ -26,7 +27,8 @@ export class MainComponent {
       { Id: 2, Title: 'History', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: HistoryComponent },
       { Id: 3, Title: 'Account', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: AccountsComponent },
       { Id: 4, Title: 'Profile', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent },
-      { Id: 5, Title: '', class: "fa-solid fa-gear", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent }
+      { Id: 5, Title: 'Admin', class: "", Route: '/main', Visible: true, isSelected: Observable<false>, View: AdminComponent },
+      { Id: 6, Title: '', class: "fa-solid fa-gear", Route: '/main', Visible: true, isSelected: Observable<false>, View: ProfileComponent }
     ];
 
     constructor(private usrData: UserData, private _authController: AuthController) {}

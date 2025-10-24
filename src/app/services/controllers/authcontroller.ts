@@ -26,4 +26,8 @@ export class AuthController {
             firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber 
         });
     }
+
+    isAdmin() {
+        return this.http.get<{token: string}>(`${this.apiURL}/isAdmin`);
+    }
 }

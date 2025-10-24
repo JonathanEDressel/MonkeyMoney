@@ -9,4 +9,4 @@ def send_usr_email(toAddress, fromAddress, subject, body):
         return _emailDbCtx.send_usr_email(toAddress, fromAddress, subject, body)
     except Exception as e:
         print(f"ERROR: {e}")
-        return jsonify({"message": e, "status": 400}), 400
+        return jsonify({"result": e, "status": 400}), 400
