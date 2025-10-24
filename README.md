@@ -10,7 +10,7 @@ Creating a Angular app to learn more about login authentication, web security an
 4) Navigate to the ./backend folder
 5) Install any necessary Python programs
     - "pip install flask flask-limiter flask-cors bcrypt mysql-connector-python dotenv uuid PyJWT cryptography"
-6) Run "python Server.js"
+6) Run "python Server.py"
 
 ## Running Front-End:
 1) Navigate to root folder
