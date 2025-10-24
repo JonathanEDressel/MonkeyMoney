@@ -1,15 +1,18 @@
 from flask import jsonify, request
 from functools import wraps
+from dotenv import load_dotenv
 import random
 import jwt
 import datetime
 import os
 
+load_dotenv()
+
 SECRET_KEY=os.getenv("SECRET_KEY")
 ALGO_TO_USE=os.getenv("ALGO_TO_USE", "HS256")
 
-# if not SECRET_KEY:
-#     raise ValueError("SECRET_KEY environment variable is not set.")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is not set.")
 
 def create_jwt(uuid, username):
     if not uuid or not username:
@@ -21,6 +24,7 @@ def create_jwt(uuid, username):
         "exp": now + datetime.timedelta(minutes=120),
         "iat":now
     }
+    print("SECRET_KEY:",SECRET_KEY)
     token = jwt.encode(payload, SECRET_KEY, algorithm=ALGO_TO_USE)
     if isinstance(token, bytes):
         token = token.decode("utf-8")
