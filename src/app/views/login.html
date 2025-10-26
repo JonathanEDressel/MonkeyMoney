@@ -1,24 +1,31 @@
 <main class="container d-flex justify-content-center align-items-center min-vh-100">
   <div class="col-10 col-md-6 text-center bg-light p-4 rounded shadow">
+    <img class="logo-img mb-4" src="assets/images/monkeymonielogo.png" alt="MonkeyMonie Logo" height="140" style="border: 3px black solid;"/>
     <h2 class="mb-4">Log In or Sign Up</h2>
 
     <div class="d-flex align-items-center mb-3">
       <div class="col col-2 text-start">
         <label for="email" class="form-label me-5 mb-0"><strong>Email</strong></label>
       </div>
-      <div class="col col-9">
+      <div class="col col-10">
         <input id="email" type="email" class="form-control" placeholder="Email or username" [(ngModel)]="UserEmail" />
       </div>
     </div>
-    <div class="d-flex align-items-center mb-3">
+    <div class="d-flex align-items-center">
       <div class="col col-2 text-start">
         <label for="password" class="form-label me-3 mb-0"><strong>Password</strong></label>
       </div>
-      <div class="col col-9">
+      <div class="col col-10">
         <input id="password" type="password" class="form-control" [(ngModel)]="UserPassword" >
       </div>
     </div>
-    <button class="btn btn-success" (click)="login()">
+    <div>
+      <div class="col col-12 text-end">
+        <a href="forgotpassword">Forgot Password</a>
+      </div>
+    </div>
+    <button class="col-4 btn btn-success" (click)="login()">
+      Login
       <i class="fa-solid fa-right-to-bracket"></i> 
     </button>
     @if (ErrorMsg()) {
@@ -27,9 +34,9 @@
       </div>
     }
     <div class="text-center mt-3 mb-3">
-      <strong>OR</strong>
+      <h3>OR</h3>
     </div>
-    <button class="btn btn-primary" (click)="createAccount()">
+    <button class="col-4 btn btn-primary" (click)="createAccount()">
       Create an Account
     </button>
   </div>

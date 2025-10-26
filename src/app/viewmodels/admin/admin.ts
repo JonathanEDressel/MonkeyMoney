@@ -2,13 +2,13 @@ import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'history-root',
+  selector: 'admin-root',
   imports: [FormsModule],
-  templateUrl: '../../views/portal/accounts.html',
-  styleUrl: '../../styles/portal/accounts.scss'
+  templateUrl: '../../views/admin/admin.html',
+  styleUrl: '../../styles/admin/admin.scss'
 })
 
-export class AccountsComponent {
+export class AdminComponent {
     ngOnInit(): void {
         this.activate();
     }

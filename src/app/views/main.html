@@ -1,50 +1,44 @@
-<style>
-    .active {
-        /* font-size: larger; */
-        background-color: darkblue;
-        border-radius: 15px;;
-    }
-
-    .header {
-        border-bottom: 2px solid white;
-    }
-
-    .settings :hover {
-    }
-</style>
-<div class="continer">
+<div class="container main">
     <div class="row header">
         <div class="col col-12 text-center">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand text-white fw-bold" href="/main">MonkeyMoney</a>
+                    <a class="navbar-brand fw-bold" routerLink="/main">
+                        <img class="logo-img" src="assets/images/monkeymonielogo.png" alt="MonkeyMonie Logo" height="70"/>
+                    </a>
                     <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#nav3">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <h3>{{user }} i</h3>
                     <div class="collapse navbar-collapse justify-content-end" id="nav3">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             @for (pg of portalPages; track pg) {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" (click)="setPage(pg)" [routerLink]="pg.Route" [class.active]="selectedPage === pg.Id" >
-                                    {{pg.Title}}
-                                </a>
-                            </li>
+                                @if(pg.Visible) {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" (click)="setPage(pg)" [routerLink]="pg.Route" [class.active]="selectedPage === pg.Id" >
+                                            {{pg.Title}}
+                                        </a>
+                                    </li>
+                                }
                             }
                         </ul>
                     </div>
-                    <a class="settings ms-3 navbar-brand text-white fw-bold" href="/main">
+                    <a class="settings navbar-brand text-white fw-bold" href="/main">
                         <i class="fa-solid fa-gear"></i>
                     </a>
+                    <span class="logout-logo" (click)="logout()">
+                        <a>
+                            Logout
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                    </span>
                 </div>
             </nav>
+        </div>
     </div>
+    <div class="row" >
+        @if(getPage) {
+            <ng-container [ngComponentOutlet]="getPage"></ng-container>
+        }
     </div>
-</div>
-<div class="row">
-    
-</div>
-<div class="row mb-4" style="height: 170%;">
-    @if(getPage) {
-        <ng-container [ngComponentOutlet]="getPage"></ng-container>
-    }
 </div>

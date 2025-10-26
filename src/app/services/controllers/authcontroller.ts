@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class AuthController {
         return this.http.post<{ token: string }>(`${this.apiURL}/signup`, { 
             firstname: fname, lastname: lname, email: email, userpassword: password, phonenumber: phonenumber 
         });
+    }
+
+    isAdmin(): Observable<any> {
+        return this.http.get<{token: string}>(`${this.apiURL}/isAdmin`);
     }
 }

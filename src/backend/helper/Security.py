@@ -1,8 +1,12 @@
+from flask import jsonify, request, g
 from functools import wraps
-from flask import jsonify, request
+from dotenv import load_dotenv
+import random
 import jwt
 import datetime
 import os
+
+load_dotenv()
 
 SECRET_KEY=os.getenv("SECRET_KEY")
 ALGO_TO_USE=os.getenv("ALGO_TO_USE", "HS256")
@@ -36,16 +40,27 @@ def requires_token(f):
 
         if not token:
             return jsonify({'error': 'Token is missing'}), 401
-
         try:
             decoded = jwt.decode(token, SECRET_KEY, algorithms=[ALGO_TO_USE])
         except jwt.ExpiredSignatureError:
             return jsonify({'error': 'Token expired'}), 401
         except jwt.InvalidTokenError:
             return jsonify({'error': 'Invalid token'}), 401
-
-        return f(decoded, *args, **kwargs)
+        g.decoded_token = decoded
+        return f(*args, **kwargs)
     return decorator
+
+def generate_otp(otp_len=6):
+    try:
+        if not isinstance(otp_len, int) or otp_len <= 0:
+            print("generate_otp parameters are not valid")
+            return None
+        
+        min = 10 ** (otp_len - 1)
+        max = (10 ** otp_len) - 1
+        return random.randint(min, max)
+    except Exception as e:
+        print(f"ERROR: {e}")
 
 # @app.route("/protected", methods=["GET"])
 # @token_required

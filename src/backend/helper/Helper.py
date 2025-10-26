@@ -56,7 +56,6 @@ def create_table(table, fields):
         print(f"Checking if {table} table exists.")
         connection = connect_to_db()
         cursor = connection.cursor()
-        
         cursor.execute("SHOW TABLES")
         exists = False
         for t in cursor:
@@ -66,7 +65,7 @@ def create_table(table, fields):
         
         if not exists:
             print(f"{table} table does not exist. Creating table...")
-            sql = f"CREATE TABLE {table} {fields};"
+            sql = f"CREATE TABLE IF NOT EXISTS {table} {fields};"
             run_query(sql)
         else:
             print(f"{table} table already exists")
@@ -74,67 +73,6 @@ def create_table(table, fields):
     except Exception as e:
         print(f"ERROR create_table(): {e}")
         return False
-
-# def insert_value(table, fields, values):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         placeholders = ",".join(["?"] * len(values))
-#         exec_str = f"INSERT INTO {table} ({','.join(fields)}) VALUES ({placeholders})"
-#         conn.execute(exec_str, values)
-#         conn.commit()
-#         conn.close()
-#     except Exception as e:
-#         print(f"ERROR insert_value(): {e}")
-
-# def has_email(email):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         cursor = conn.cursor()
-#         cursor.execute(f"SELECT Email FROM UserAcct WHERE Email=?", [email])
-#         usrrow = cursor.fetchone()
-#         conn.close()
-#         return usrrow
-#     except Exception as e:
-#         print(f"ERROR has_email(): {e}")
-
-# def has_username(username):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         cursor = conn.cursor()
-#         cursor.execute(f"SELECT Username FROM UserAcct WHERE Username=?", [username])
-#         usrrow = cursor.fetchone()
-#         conn.close()
-#         return usrrow
-#     except Exception as e:
-#         print(f"ERROR has_username(): {e}")
-
-# def has_value(table, field, value):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         cursor = conn.cursor()
-#         cursor.execute(f"SELECT Id FROM {table} WHERE {field}=?", [value])
-#         dta = cursor.fetchall()
-#         conn.close()
-#         return len(dta) > 0
-#     except Exception as e:
-#         print(f"ERROR has_value(): {e}")
-
-def has_value2(table, field, value):
-    try:
-        print('hi')
-    except Exception as e:
-        print(f"ERROR has_value(): {e}")
-
-# def set_default(table, field, value, where):
-#     try:
-#         conn = _get_ProgramDB_Connection()
-#         if len(where) > 0:
-#             conn.execute(f"UPDATE {table} SET {field}={value} {where}")
-#         else:
-#             conn.execute(f"UPDATE {table} SET {field}={value}")
-#         conn.close()
-#     except Exception as e:
-#         print(f"ERROR set_default(): {e}")
     
 def encrypt_password(password: str | bytes):
     try:
