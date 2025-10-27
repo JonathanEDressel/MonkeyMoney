@@ -1,6 +1,6 @@
-# Typescript-Learning
+# MonkeyMonie
 
-Creating a Angular app to learn more about login authentication, web security and many other fields.
+Creating a Angular app to learn more about login authentication, web security and many other areas.
 
 ## Running Back-End:
 1) Navigate to ./Typescript-Learning
@@ -28,6 +28,8 @@ Creating a Angular app to learn more about login authentication, web security an
 * firebase login
 * npm run build
 * firebase deploy
+* You can preview changes with:
+    - firebase hosting:channel:deploy preview_name
 
 ## To-Do:
 * Create a login page
