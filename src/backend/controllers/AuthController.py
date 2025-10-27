@@ -39,7 +39,7 @@ def create_account():
         return jsonify({"result": e, "status": 400}), 400
     
 @auth_bp.route("/forgotPassword", methods=['POST'])
-@limiter.limit("1 per minute")
+@limiter.limit("100 per minute")
 def forgot_password():
     try:
         req = request.json

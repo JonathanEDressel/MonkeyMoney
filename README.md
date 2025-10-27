@@ -39,7 +39,7 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Create sign up page</s>
     * Add payment page
     * Add forgot password page
-    * Create email svc with Postmark
+    * <s>Create email svc with Postmark</s>
     * Add email validation
     * Implement SSO
 * Setup the initial user db
