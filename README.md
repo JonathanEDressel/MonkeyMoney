@@ -59,8 +59,9 @@ Creating a Angular app to learn more about login authentication, web security an
 * Page routing
     * <s>Route pages on one page</s>
     * <s>Add auth for pages when not logged in</s>
-    * Add auth for admin pages
+    * <s>Add auth for admin pages</s>
 * Misc. 
     * <s>Switch to MySQL</s>
+    * <s>Inject GA4</s>
     * Create admin settings
     * Ability to generate a pdf
