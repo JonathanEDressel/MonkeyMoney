@@ -15,6 +15,8 @@ Creating a Angular app to learn more about login authentication, web security an
 ## Running Front-End:
 1) Navigate to root folder
 2) Run "npm start" (assuming node.js is installed. If not, install here https://nodejs.org/en)
+    - run "ng serve" to run development (environment.ts)
+    - run "ng build --prod" to run for production (environment.prod.ts)
 3) Additional packages may need to be installed
 4) Open in the local browser
 
