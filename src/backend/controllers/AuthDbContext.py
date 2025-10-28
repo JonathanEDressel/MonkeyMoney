@@ -113,5 +113,16 @@ def create_account(fname, lname, username, phonenumber, password):
         print(f"ERROR: {e}")
         return jsonify({"result": e, "status": 400}), 400
     
+def create_new_otp(id, hash):
+    try:
+        sql = f"INSERT INTO OTPTokens (UserId, TokenHash, ExpireTime, HasVerified) " \
+            "Values(%s, %s, %s, %s);"
+        vars = (id, hash, datetime.now(), False)
+        res = DBHelper.run_query(sql, vars, fetch=False)
+        return res
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"result": e, "status": 400}), 400
+
 def update_password():
     print('placeholder')

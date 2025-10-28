@@ -115,3 +115,10 @@ def validate_db():
         "Version VARCHAR(100), " \
         "Notes VARCHAR(255), " \
         "DateAdded DATETIME)")
+    
+    DBHelper.create_table("OTPTokens", "" \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "UserId INTEGER NOT NULL, " \
+        "TokenHash VARCHAR(255), " \
+        "ExpireTime DATETIME," \
+        "FOREIGN KEY (UserId) References UserAcct(Id))")

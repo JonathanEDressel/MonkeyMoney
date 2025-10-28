@@ -49,7 +49,7 @@ def forgot_password():
             return jsonify({"result": "Email successfully sent!", "status": 200}), 200 
         
         params = (useremail, useremail)
-        usr = DBHelper.run_query("SELECT Email FROM UserAcct Where Username = %s or Email = %s", params, True)
+        usr = DBHelper.run_query("SELECT Id, Email FROM UserAcct Where Username = %s or Email = %s", params, True)
         if not usr:
             return jsonify({"result": "Please enter in a valid email", "status": 400}), 400
         
