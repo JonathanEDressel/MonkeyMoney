@@ -64,7 +64,6 @@ def forgot_password():
 @requires_token
 def is_admin():
     try:
-        # decoded = g.decoded_token
         res = _authCtx.is_admin()
         return jsonify({"result": res, "status": 200}), 200
     except Exception as e:

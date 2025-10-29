@@ -73,7 +73,7 @@ def validate_db():
         "FOREIGN KEY (UserId) References UserAcct(Id))")
     
     DBHelper.create_table("PersonalAccounts", "" \
-        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
+        "(Id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, " \
         "UserId INTEGER NOT NULL, " \
         "Name VARCHAR(100), " \
         "Type VARCHAR(100), " \
