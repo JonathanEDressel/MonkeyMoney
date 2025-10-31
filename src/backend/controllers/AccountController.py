@@ -12,7 +12,7 @@ act_bp = Blueprint("act", __name__)
 def add_personal():
     try:
         req = request.json
-        name = req.get('accountName', '').strip()
+        name = req.get('name', '').strip()
         type = req.get('type', '').strip()
         balance = float(req.get('balance', '').strip())
         

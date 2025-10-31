@@ -13,7 +13,6 @@ export class AuthController {
     private apiURL = environment.apiUrl + '/auth';
 
     login(username: string, password: string) {
-        console.log(this.apiURL, username, password)
         return this.http.post<{ token: string }>(`${this.apiURL}/login`, { 
             username: username, userpassword: password 
         });
