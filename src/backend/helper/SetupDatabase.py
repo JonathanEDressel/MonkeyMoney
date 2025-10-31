@@ -75,6 +75,7 @@ def validate_db():
     DBHelper.create_table("PersonalAccounts", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL, " \
         "UserId INTEGER NOT NULL, " \
+        "IsActive TINYINT DEFAULT 1," \
         "Name VARCHAR(100), " \
         "Type VARCHAR(100), " \
         "CreatedDate DATETIME, " \
@@ -83,6 +84,7 @@ def validate_db():
     DBHelper.create_table("InvestmentAccounts", "" \
         "(Id INTEGER PRIMARY KEY AUTO_INCREMENT, " \
         "UserId INTEGER NOT NULL, " \
+        "IsActive TINYINT DEFAULT 1," \
         "Name VARCHAR(100), " \
         "Type VARCHAR(100), " \
         "CreatedDate DATETIME, " \

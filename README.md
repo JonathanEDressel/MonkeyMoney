@@ -57,6 +57,12 @@ Creating a Angular app to learn more about login authentication, web security an
     * <s>Add sql injection checks</s>
     * <s>Add AccountHistory table</s>
     * Add indexing to some tables (not sure which tables yet)
+* Overview page
+    * Grab currnet user accounts
+* Account page
+    * User can account personal/taxable
+    * User can delete account personal/taxable
+    * User can hide/show account personal/taxable
 * Error Logging DB:
     * <s>Add error logging table</s>
     * Find way to log errors in the table when exceptions are hit

@@ -9,7 +9,7 @@ class PersonalAccount:
     Name: Optional[str]
     Type: Optional[str]
     CreatedDate: Optional[datetime]
-    Record: List[Any]
+    Records: List[Any]
     
 def data_to_model(data):
     if not data:
@@ -20,7 +20,7 @@ def data_to_model(data):
         Name=data.get('Name'),
         Type=data.get('Type'),
         CreatedDate=convert_datetime(data.get('CreatedDate')),
-        Record=[]
+        Records=[]
     )
     
 def convert_datetime(val):

@@ -96,7 +96,6 @@ def user_login(username, password):
         usrPWHash = usr[0]['UserPassword']
         if isinstance(usrPWHash, str):
             usrPWHash = usrPWHash.encode('utf-8')
-
         token = get_user_token(usr[0]['Username'], usr[0]['UUID'])
         if (DBHelper.check_passwords(password, usrPWHash)) and (token is not None):
             currDte = str(datetime.now(timezone.utc))
