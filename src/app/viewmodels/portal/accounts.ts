@@ -1,5 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
+import { AcctData } from '../../services/acctdata';
 
 @Component({
   selector: 'history-root',
@@ -9,11 +10,21 @@ import { Component } from '@angular/core';
 })
 
 export class AccountsComponent {
+    constructor(private _acctData: AcctData) {}
+
+    acctName: string = "";
+    acctType: string = "";
+    acctBalance: number = 0;
+
     ngOnInit(): void {
         this.activate();
     }
 
     activate(): void {
         console.log('account tab called');
+    }
+
+    addAccount(): void {
+        this._acctData.addPersonalAccount(this.acctName, this.acctType, this.acctBalance);
     }
 }

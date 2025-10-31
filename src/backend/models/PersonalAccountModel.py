@@ -1,15 +1,16 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List, Optional,Any
+from typing import List, Optional, Any
 
 @dataclass
 class PersonalAccount:
-    Id: int
-    UserId: Optional[int]
-    Name: Optional[str]
-    Type: Optional[str]
-    CreatedDate: Optional[datetime]
-    Records: List[Any]
+    Id: Optional[int] = None
+    UserId: Optional[int] = None
+    Name: Optional[str] = None
+    Type: Optional[str] = None
+    Balance: Optional[float] = None
+    DateAdded: Optional[datetime] = None
+    Records: List[Any] = field(default_factory=list)
     
 def data_to_model(data):
     if not data:
@@ -19,7 +20,8 @@ def data_to_model(data):
         UserId=data.get('UserId'),
         Name=data.get('Name'),
         Type=data.get('Type'),
-        CreatedDate=convert_datetime(data.get('CreatedDate')),
+        Balance=data.get('Balance'),
+        DateAdded=convert_datetime(data.get('DateAdded')),
         Records=[]
     )
     

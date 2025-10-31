@@ -7,13 +7,13 @@ import { environment } from '../../../environments/environments';
   providedIn: 'root'
 })
 
-export class AuthController {
+export class AcctController {
     constructor(private http: HttpClient) {}
 
     private apiURL = environment.apiUrl + '/act';
 
     addPersonalAccount(acctName: string, acctType: string, acctBalance: number) {
-        return this.http.post<{ token: string }>(`${this.apiURL}/login`, { 
+        return this.http.post<{ token: string }>(`${this.apiURL}/add/personal`, { 
             name: acctName,
             type: acctType,
             balance: acctBalance

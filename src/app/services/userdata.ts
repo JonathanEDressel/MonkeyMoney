@@ -44,7 +44,7 @@ export class UserData {
           }
         },
         error: (err: any) => console.error(err)
-      })
+      });
     }
 
     get currentUser(): UserModel {

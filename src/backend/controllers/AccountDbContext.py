@@ -1,7 +1,7 @@
 from flask import jsonify
 from datetime import datetime, timezone
 import helper.Helper as DBHelper
-from models.PersonalAccountModel import data_to_model
+import models.PersonalAccountModel as PersonalAccount
 
 #InvestmentAccounts
 def add_taxable_account():
@@ -11,11 +11,20 @@ def add_taxable_account():
 def add_personal_account(userid, name, type):
     try:
         params = ["UserId", "Name", "Type", "CreatedDate"]
-        values = (userid, name, type, datetime.now(timezone.utc))
+        dte = datetime.now(timezone.utc)
+        values = (userid, name, type, dte)
         acctid = DBHelper.insert_into("PersonalAccounts", params, values)
         if acctid <= 0:
             print(f"Account ({name}) added successfully")
-        return acctid
+            
+        #create an assign from data to model function
+        res = PersonalAccount.PersonalAccount()
+        res.Id = acctid
+        res.DateAdded = dte
+        res.Name = name
+        res.Type = type
+        res.Balance = 2300
+        return res
     except Exception as e:
         print(f"ERROR: {e}")
         return -1
@@ -30,7 +39,7 @@ def get_personal_accounts(userid):
         accounts = DBHelper.run_query(sql, params, True)
         res = []
         for a in accounts:
-            tmp = data_to_model(a)
+            tmp = PersonalAccount.data_to_model(a)
             res.append(tmp)
         return res
     except Exception as e:
