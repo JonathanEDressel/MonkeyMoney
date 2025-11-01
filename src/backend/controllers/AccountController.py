@@ -21,11 +21,10 @@ def add_personal():
             return jsonify({"result": None, "status": 401}), 401
         
         userid = usr.Id
-        act = _actCtx.add_personal_account(userid, name, type)
+        act = _actCtx.add_personal_account(userid, name, type, balance)
         if act.Id <= 0:
             return jsonify({"result": f"Failed to add {name} account", "status": 400}), 400
         res = _actCtx.add_personal_record(act.Id, balance)
-        print('act - ', act)
         return jsonify({"result": act, "status": 200}), 200
     except Exception as e:
         print(f"ERROR: {e}")

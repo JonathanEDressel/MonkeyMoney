@@ -21,7 +21,7 @@ def data_to_model(data):
         Name=data.get('Name'),
         Type=data.get('Type'),
         Balance=data.get('Balance'),
-        DateAdded=convert_datetime(data.get('DateAdded')),
+        DateAdded=convert_datetime(data.get('CreatedDate')),
         Records=[]
     )
     

@@ -37,24 +37,15 @@
             <th>Date Added</th>
         </thead>   
         <tbody>
-            <tr>
-                <td>Roth IRA</td>
-                <td>$45,000</td>
-                <td>Retirement</td>
-                <td>1/1/2025</td>
-            </tr>
-            <tr>
-                <td>Roth IRA</td>
-                <td>$15,000</td>
-                <td>Retirement</td>
-                <td>1/1/2025</td>
-            </tr>
-            <tr>
-                <td>401(k)</td>
-                <td>$125,000</td>
-                <td>Retirement</td>
-                <td>1/1/2025</td>
-            </tr>
+            @for (acct of personalAccts$ | async; track acct)
+            {
+                <tr>
+                    <td>{{acct.Name}}</td>
+                    <td class="currency">{{acct.Balance}}</td>
+                    <td>{{acct.Type}}</td>
+                    <td>{{acct.DateAdded}}</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

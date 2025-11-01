@@ -12,8 +12,8 @@ export class AcctData {
 
     userPersonalAccounts: PersonalAccountModel[] = [];
 
-    private personalActSubject = new BehaviorSubject<PersonalAccountModel | null>(null);
-    personalAccounts$: Observable<PersonalAccountModel | null>  = this.personalActSubject.asObservable();
+    private personalActSubject = new BehaviorSubject<PersonalAccountModel[]>([]);
+    personalAccounts$: Observable<PersonalAccountModel[]>  = this.personalActSubject.asObservable();
 
     constructor(private _acctController: AcctController) {}
 
@@ -25,16 +25,36 @@ export class AcctData {
                 if(res.status === 200) {
                     console.log(`${acctName} added`);
                     var tmp = new PersonalAccountModel();
-                    console.log(res);
                     tmp.assignData(res.result);
-                    this.personalActSubject.next(tmp);
-                    console.log('tmp - ', tmp)
+                    
+                    const accounts = this.personalActSubject.value;
+                    this.personalActSubject.next([...accounts, tmp]);
                 }
                 else {
                     console.warn(`Failed to add account ${acctName}`);
                 }
             },
-            error: (err: any) => console.log(err)
+            error: (err: any) => console.error(err)
         });
+    }
+
+    getPersonalAccounts(): any {
+        this._acctController.getPersonalAccounts().subscribe({
+            next: (res: any) => {
+                if(res.status === 200) {
+                    const accounts: PersonalAccountModel[] = [];
+                    var data = res.result;
+                    for(var i = 0; i < data.length; i++) {
+                        var acct = new PersonalAccountModel();
+                        acct.assignData(data[i]);
+                        accounts.push(acct);
+                    }
+                    this.personalActSubject.next(accounts);
+                }
+                else
+                    console.warn('Failed to get accounts');
+            },
+            error: (err: any) => console.error(err)
+        })
     }
 }

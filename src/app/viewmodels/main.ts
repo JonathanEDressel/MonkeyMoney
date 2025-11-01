@@ -19,8 +19,6 @@ import { AuthData } from '../services/authdata';
   styleUrl: '../styles/main.scss'
 })
 export class MainComponent {
-    users: UserModel[] = [];
-    // user2: UserModel;
     portalPages: any[] = [];
     selectedPage: number = 2;
 
@@ -28,8 +26,8 @@ export class MainComponent {
     isAdmin$: Observable<boolean>;
 
     constructor(private _usrData: UserData, private _authData: AuthData) {
-      this.user$ = this._usrData.user$;
-      this.isAdmin$ = this._usrData.isAdmin$;
+      this.user$ = _usrData.user$;
+      this.isAdmin$ = _usrData.isAdmin$;
       this.portalPages = this.createPages();
       // this.user2 = this._usrData.currentUser;
     }

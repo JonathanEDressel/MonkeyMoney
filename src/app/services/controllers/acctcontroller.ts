@@ -19,4 +19,8 @@ export class AcctController {
             balance: acctBalance
         });
     }
+
+    getPersonalAccounts(): any {
+        return this.http.get<{token: string}>(`${this.apiURL}/personal`);
+    }
 }

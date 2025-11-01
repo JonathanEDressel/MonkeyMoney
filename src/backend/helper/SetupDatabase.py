@@ -78,6 +78,7 @@ def validate_db():
         "IsActive TINYINT DEFAULT 1," \
         "Name VARCHAR(100), " \
         "Type VARCHAR(100), " \
+        "Balance FLOAT, " \
         "CreatedDate DATETIME, " \
         "FOREIGN KEY (UserId) References UserAcct(Id))")
     
@@ -87,6 +88,7 @@ def validate_db():
         "IsActive TINYINT DEFAULT 1," \
         "Name VARCHAR(100), " \
         "Type VARCHAR(100), " \
+        "Balance FLOAT, " \
         "CreatedDate DATETIME, " \
         "Holdings LONGBLOB, " \
         "FOREIGN KEY (UserId) References UserAcct(Id))")

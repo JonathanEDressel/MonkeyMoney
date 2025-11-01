@@ -8,11 +8,11 @@ def add_taxable_account():
     return jsonify({"result": "success", "status": 200}), 200
     
 #PersonalAccounts
-def add_personal_account(userid, name, type):
+def add_personal_account(userid, name, type, balance):
     try:
-        params = ["UserId", "Name", "Type", "CreatedDate"]
+        params = ["UserId", "Name", "Type", "Balance", "CreatedDate"]
         dte = datetime.now(timezone.utc)
-        values = (userid, name, type, dte)
+        values = (userid, name, type, balance, dte)
         acctid = DBHelper.insert_into("PersonalAccounts", params, values)
         if acctid <= 0:
             print(f"Account ({name}) added successfully")
@@ -31,10 +31,12 @@ def add_personal_account(userid, name, type):
     
 def get_personal_accounts(userid):
     try:
-        sql = "SELECT PA.Id AS AccountId, PA.UserId, PA.Name, PA.Type, PA.CreatedDate FROM " \
-            "PersonalAccounts as PA " \
-            "INNER JOIN PersonalAccountHistory AS PAH ON PA.Id = PAH.AccountId " \
-            "WHERE PA.UserId = %s ORDER By PA.Id Desc"
+        sql = "SELECT pa.Id AS AccountId, pa.UserId, pa.Balance, pa.Name, pa.Type, pa.CreatedDate From PersonalAccounts as pa " \
+            "WHERE pa.UserId = %s Order by pa.Id Desc"
+        # sql = "SELECT PA.Id AS AccountId, PA.Balance, PA.UserId, PA.Name, PA.Type, PA.CreatedDate FROM " \
+            # "PersonalAccounts as PA " \
+            # "INNER JOIN PersonalAccountHistory AS PAH ON PA.Id = PAH.AccountId " \
+            # "WHERE PA.UserId = %s ORDER By PA.Id Desc"
         params = (userid,)
         accounts = DBHelper.run_query(sql, params, True)
         res = []
