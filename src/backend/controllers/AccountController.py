@@ -30,6 +30,18 @@ def add_personal():
         print(f"ERROR: {e}")
         return jsonify({"result": e, "status": 400}), 400
     
+@act_bp.route('/remove/personal/<int:AcctId>', methods=['DELETE'])
+@limiter.limit("60 per minute")
+@requires_token
+def remove_personal(AcctId):
+    try:
+        usr = _authCtx.get_current_user()
+        print("acctid - ", AcctId)
+        
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"result": e, "status": 400}), 400
+    
 @act_bp.route('/personal', methods=['Get'])
 @limiter.limit("60 per minute")
 @requires_token
