@@ -15,7 +15,7 @@
 
     <div class="col col-3">
         <span>Type</span>
-        <input class="form-control" placeholder="Savings, checking, etc." [(ngModel)]="acctType" />
+        <input class="form-control" placeholder="Savings, checking, etc." [(ngModel)]="acctType" (keydown.enter)="addAccount()" />
     </div>
 
     <div class="col col-1 pt-4">
@@ -35,6 +35,7 @@
             <th>Balance</th>
             <th>Type</th>
             <th>Date Added</th>
+            <th></th>
         </thead>   
         <tbody>
             @for (acct of personalAccts$ | async; track acct)
@@ -44,6 +45,11 @@
                     <td class="currency">{{acct.Balance}}</td>
                     <td>{{acct.Type}}</td>
                     <td>{{acct.DateAdded}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" (click)="removeAccount(acct.Id)">
+                            <i class="fa-solid fa-x"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>

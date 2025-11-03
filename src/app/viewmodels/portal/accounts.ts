@@ -42,4 +42,8 @@ export class AccountsComponent {
         this._acctData.addPersonalAccount(this.acctName, this.acctType, this.acctBalance);
         this.clearInputs();
     }
+
+    removeAccount(id: number): void {
+        console.log('ID - ', id)
+    }
 }

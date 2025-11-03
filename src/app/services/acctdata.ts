@@ -38,6 +38,15 @@ export class AcctData {
         });
     }
 
+    removePersonalAccount(Id: number): any {
+        this._acctController.removePersonalAccount(Id).subscribe({
+            next: (res: any) => {
+                console.log('res - ', res);
+            },
+            error: (err: any) => console.error(err)
+        })
+    }
+
     getPersonalAccounts(): any {
         this._acctController.getPersonalAccounts().subscribe({
             next: (res: any) => {
