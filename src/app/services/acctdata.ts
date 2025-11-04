@@ -41,7 +41,14 @@ export class AcctData {
     removePersonalAccount(Id: number): any {
         this._acctController.removePersonalAccount(Id).subscribe({
             next: (res: any) => {
-                console.log('res - ', res);
+                if(res.status === 200) {
+                    console.log('Account deleted');
+                    const accounts = this.personalActSubject.value;
+                    const result = accounts.filter(act => act.Id !== Id);
+                    this.personalActSubject.next([...result]);
+                }
+                else    
+                    console.warn('Account failed to delete');
             },
             error: (err: any) => console.error(err)
         })

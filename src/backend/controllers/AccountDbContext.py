@@ -28,6 +28,16 @@ def add_personal_account(userid, name, type, balance):
     except Exception as e:
         print(f"ERROR: {e}")
         return -1
+   
+def remove_personal_account(acctid, userid):
+    try:
+        sql = "DELETE FROM PersonalAccounts WHERE Id = %s AND UserId = %s"
+        params = (acctid, userid)
+        print(f"Removing personal account {acctid} for user {userid}")
+        return DBHelper.run_query(sql, params, False)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return False
     
 def get_personal_accounts(userid):
     try:

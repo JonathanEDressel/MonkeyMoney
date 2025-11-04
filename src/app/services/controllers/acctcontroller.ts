@@ -21,7 +21,7 @@ export class AcctController {
     }
 
     removePersonalAccount(Id: number) {
-        return this.http.delete<{ token: string}>(`${this.apiURL}/delete/personal/` + Id);
+        return this.http.delete<{ token: string}>(`${this.apiURL}/remove/personal/` + Id);
     }
 
     getPersonalAccounts(): any {

@@ -36,8 +36,18 @@ def add_personal():
 def remove_personal(AcctId):
     try:
         usr = _authCtx.get_current_user()
-        print("acctid - ", AcctId)
         
+        acts = _actCtx.get_personal_accounts(usr.Id)
+        hasAccount = False
+        for act in acts:
+            if act.Id == AcctId:
+                hasAccount = True
+                break
+        if not hasAccount:
+            return jsonify({"result": None, "status": 401}), 401
+        
+        _actCtx.remove_personal_account(AcctId, usr.Id)
+        return jsonify({"result": "account removed", "status": 200}), 200 
     except Exception as e:
         print(f"ERROR: {e}")
         return jsonify({"result": e, "status": 400}), 400

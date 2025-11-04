@@ -1,5 +1,5 @@
 import { FormsModule } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AcctData } from '../../services/acctdata';
 import { Observable } from 'rxjs';
 import { PersonalAccountModel } from '../../models/personalaccountmodel';
@@ -13,9 +13,9 @@ import { AsyncPipe } from '@angular/common';
 })
 
 export class AccountsComponent {
-    acctName: string = "";
-    acctType: string = "";
-    acctBalance: number = 0;
+    acctName = signal("");//string = "";
+    acctType = signal("");
+    acctBalance = signal(0);
     personalAccts$: Observable<PersonalAccountModel[]>;
 
     constructor(private _acctData: AcctData) {
@@ -23,9 +23,9 @@ export class AccountsComponent {
     }
 
     clearInputs(): void {
-        this.acctBalance = 0;
-        this.acctType = "";
-        this.acctName = "";
+        this.acctBalance.set(0);
+        this.acctType.set("");
+        this.acctName.set("");
         console.log('clear')
     }
 
@@ -35,15 +35,15 @@ export class AccountsComponent {
     }
 
     activate(): void {
-        console.log('account tab called');
+        // console.log('account tab called');
     }
 
     addAccount(): void {
-        this._acctData.addPersonalAccount(this.acctName, this.acctType, this.acctBalance);
+        this._acctData.addPersonalAccount(this.acctName(), this.acctType(), this.acctBalance());
         this.clearInputs();
     }
 
     removeAccount(id: number): void {
-        console.log('ID - ', id)
+        this._acctData.removePersonalAccount(id);
     }
 }
