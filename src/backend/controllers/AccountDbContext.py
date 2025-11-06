@@ -29,6 +29,16 @@ def add_personal_account(userid, name, type, balance):
         print(f"ERROR: {e}")
         return -1
    
+def update_personal_account(acctid, name, type, balance):
+    try:
+        sql = "UPDATE PersonalAccounts SET Name = %s, Type = %s, Balance = %s WHERE Id = %s;"
+        params = (name, type, balance, acctid)
+        print(f"Updating personal account {acctid}")
+        return DBHelper.run_query(sql, params, False)
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return False
+   
 def remove_personal_account(acctid, userid):
     try:
         sql = "DELETE FROM PersonalAccounts WHERE Id = %s AND UserId = %s"
@@ -67,6 +77,19 @@ def add_personal_record(accountid, balance):
         if id > 0:
             print(f"Account ({accountid}) record added successfully")
         return id
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return False
+    
+def personal_acct_is_users(acctid, userid):
+    try:
+        acts = get_personal_accounts(userid)
+        hasAccount = False
+        for act in acts:
+            if act.Id == acctid:
+                hasAccount = True
+                break
+        return hasAccount
     except Exception as e:
         print(f"ERROR: {e}")
         return False

@@ -60,9 +60,9 @@ Creating a Angular app to learn more about login authentication, web security an
 * Overview page
     * Grab currnet user accounts
 * Account page
-    * User can account personal/taxable
-    * User can delete account personal/taxable
-    * User can hide/show account personal/taxable
+    * User can account <s>personal</s>/taxable
+    * User can delete account <s>personal</s>/taxable
+    * User can edit account <s>personal</s>/taxable
 * Error Logging DB:
     * <s>Add error logging table</s>
     * Find way to log errors in the table when exceptions are hit

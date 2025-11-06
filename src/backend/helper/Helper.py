@@ -33,7 +33,7 @@ def run_query(query, params=None, fetch=False):
         connection.commit()
         return True
     except Exception as e:
-        print(f"ERROR: {e}")
+        print(f"ERROR run_query(): {e}")
         return False
     finally:
         if cursor:
@@ -68,7 +68,7 @@ def insert_into(table, params, values):
         cursor.execute(sql)
         return int(cursor.fetchone()['Id'])
     except Exception as e:
-        print(f"ERROR: {e}")
+        print(f"ERROR insert_into(): {e}")
         return False
     finally:
         if cursor:

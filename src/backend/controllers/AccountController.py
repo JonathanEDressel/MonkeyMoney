@@ -12,9 +12,9 @@ act_bp = Blueprint("act", __name__)
 def add_personal():
     try:
         req = request.json
-        name = req.get('name', '').strip()
-        type = req.get('type', '').strip()
-        balance = float(req.get('balance', '').strip())
+        name = str(req.get('name', '').strip())
+        type = str(req.get('type', '').strip())
+        balance = float(req.get('balance', 0).strip())
         
         usr = _authCtx.get_current_user()
         if not usr or usr.Id <= 0:
@@ -30,6 +30,26 @@ def add_personal():
         print(f"ERROR: {e}")
         return jsonify({"result": e, "status": 400}), 400
     
+@act_bp.route('/update/personal/<int:AcctId>', methods=['PATCH'])
+@limiter.limit("60 per minute")
+@requires_token
+def update_personal(AcctId):
+    try:
+        usr = _authCtx.get_current_user()
+        print(AcctId, usr.Id)
+        if not _actCtx.personal_acct_is_users(AcctId, usr.Id):
+            return jsonify({"result": None, "status": 401}), 401
+        
+        req = request.json
+        balance = float(req.get('balance', 0).strip())
+        name = str(req.get('name', '').strip())
+        type = str(req.get('type', '').strip())
+        _actCtx.update_personal_account(AcctId, name, type, balance)
+        return jsonify({"result": AcctId, "status": 200}), 200
+    except Exception as e:
+        print(f"ERROR: {e}")
+        return jsonify({"result": e, "status": 400}), 400
+    
 @act_bp.route('/remove/personal/<int:AcctId>', methods=['DELETE'])
 @limiter.limit("60 per minute")
 @requires_token
@@ -37,13 +57,7 @@ def remove_personal(AcctId):
     try:
         usr = _authCtx.get_current_user()
         
-        acts = _actCtx.get_personal_accounts(usr.Id)
-        hasAccount = False
-        for act in acts:
-            if act.Id == AcctId:
-                hasAccount = True
-                break
-        if not hasAccount:
+        if not _actCtx.personal_acct_is_users(AcctId, usr.Id):
             return jsonify({"result": None, "status": 401}), 401
         
         _actCtx.remove_personal_account(AcctId, usr.Id)
