@@ -38,6 +38,30 @@ export class AcctData {
         });
     }
 
+    updatePersonalAccount(account: PersonalAccountModel): any {
+        this._acctController.updatePersonalAccount(account).subscribe({
+            next: (res: any) => {
+                if(res.status === 200) {
+                    console.log('Account updated');
+                    var accounts = this.personalActSubject.value;
+                    var act = accounts.find(a => a.Id === account.Id) ?? undefined; //new PersonalAccountModel();
+                    if(act) {
+                        act.Balance = account.Balance;
+                        act.Type = account.Type;
+                        act.Name = account.Name;
+
+                        accounts = accounts.filter(a => a.Id !== act?.Id);
+                        accounts.push(act);
+                        this.personalActSubject.next([...accounts]);
+                    }
+                }
+                else    
+                    console.warn('Account failed to delete');
+            },
+            error: (err: any) => console.error(err)
+        })
+    }
+
     removePersonalAccount(Id: number): any {
         this._acctController.removePersonalAccount(Id).subscribe({
             next: (res: any) => {

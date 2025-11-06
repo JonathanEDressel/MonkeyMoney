@@ -13,7 +13,10 @@ import { AsyncPipe } from '@angular/common';
 })
 
 export class AccountsComponent {
-    acctName = signal("");//string = "";
+    showModal = signal(false);
+    selectedAccount = signal(new PersonalAccountModel());
+
+    acctName = signal("");
     acctType = signal("");
     acctBalance = signal(0);
     personalAccts$: Observable<PersonalAccountModel[]>;
@@ -43,7 +46,23 @@ export class AccountsComponent {
         this.clearInputs();
     }
 
+    selectAccount(account: PersonalAccountModel) {
+        console.log('account - ', account)
+        this.showModal.set(true);
+        this.selectedAccount.set(account);
+    }
+
+    closeModal() {
+        this.showModal.set(false);
+    }
+
+    updateAccount(account: PersonalAccountModel) {
+        this._acctData.updatePersonalAccount(account);
+        this.closeModal();
+    }
+
     removeAccount(id: number): void {
+        this.closeModal();
         this._acctData.removePersonalAccount(id);
     }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environments';
+import { PersonalAccountModel } from '../../models/personalaccountmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,14 @@ export class AcctController {
             name: acctName,
             type: acctType,
             balance: acctBalance
+        });
+    }
+
+    updatePersonalAccount(account: PersonalAccountModel) {
+        return this.http.patch<{ token: string }>(`${this.apiURL}/update/personal/` + account.Id, { 
+            name: account.Name,
+            type: account.Type,
+            balance: account.Balance
         });
     }
 

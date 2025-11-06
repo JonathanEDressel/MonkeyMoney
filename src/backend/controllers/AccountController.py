@@ -14,7 +14,7 @@ def add_personal():
         req = request.json
         name = str(req.get('name', '').strip())
         type = str(req.get('type', '').strip())
-        balance = float(req.get('balance', 0).strip())
+        balance = float(req.get('balance', 0))
         
         usr = _authCtx.get_current_user()
         if not usr or usr.Id <= 0:
@@ -41,7 +41,7 @@ def update_personal(AcctId):
             return jsonify({"result": None, "status": 401}), 401
         
         req = request.json
-        balance = float(req.get('balance', 0).strip())
+        balance = float(req.get('balance', 0))
         name = str(req.get('name', '').strip())
         type = str(req.get('type', '').strip())
         _actCtx.update_personal_account(AcctId, name, type, balance)
