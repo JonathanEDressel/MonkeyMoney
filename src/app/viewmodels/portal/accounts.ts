@@ -6,7 +6,7 @@ import { PersonalAccountModel } from '../../models/personalaccountmodel';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'history-root',
+  selector: 'accounts-root',
   imports: [FormsModule, AsyncPipe],
   templateUrl: '../../views/portal/accounts.html',
   styleUrl: '../../styles/portal/accounts.scss'
@@ -47,7 +47,6 @@ export class AccountsComponent {
     }
 
     selectAccount(account: PersonalAccountModel) {
-        console.log('account - ', account)
         this.showModal.set(true);
         this.selectedAccount.set(account);
     }

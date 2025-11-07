@@ -1,8 +1,8 @@
-import { EmailValidator, FormsModule } from '@angular/forms';
-import { Component, OnInit, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
 import { UserData } from '../services/userdata';
 import { UserModel } from '../models/usermodel';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RouterLink } from "@angular/router";
 import { NgComponentOutlet, AsyncPipe } from '@angular/common';
 import { OverviewComponent } from './portal/overview';

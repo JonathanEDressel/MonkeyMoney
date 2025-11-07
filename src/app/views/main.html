@@ -13,7 +13,7 @@
                     {
                         <h3 style="color: white;">Welcome, {{ user.Username }}</h3>
                     }
-                    <div class="collapse navbar-collapse justify-content-end" id="nav3">
+                    <div class="collapse navbar-collapse justify-content-end">
                         <ul class="navbar-nav mb-2 mb-lg-0">
                             @for (pg of portalPages; track pg) {
                                 @if(pg.Visible$ | async) {
