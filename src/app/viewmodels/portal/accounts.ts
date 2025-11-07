@@ -4,10 +4,13 @@ import { AcctData } from '../../services/acctdata';
 import { Observable } from 'rxjs';
 import { PersonalAccountModel } from '../../models/personalaccountmodel';
 import { AsyncPipe } from '@angular/common';
+import { CurrencyInput } from 'react-currency-input-field';
+import {CurrencyMaskModule } from 'ng2-currency-mask';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'accounts-root',
-  imports: [FormsModule, AsyncPipe],
+  imports: [FormsModule, AsyncPipe, CurrencyMaskModule, CommonModule],
   templateUrl: '../../views/portal/accounts.html',
   styleUrl: '../../styles/portal/accounts.scss'
 })

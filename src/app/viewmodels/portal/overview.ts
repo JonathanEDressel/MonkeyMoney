@@ -3,12 +3,13 @@ import { AcctData } from '../../services/acctdata';
 import { PersonalAccountModel } from '../../models/personalaccountmodel';
 import { Observable } from 'rxjs';
 import { AgChartOptions } from 'ag-charts-community';
-import { AgChartsAngularModule  } from 'ag-charts-angular';
+// import { AgChartsAngularModule  } from '@ag-charts/angular';
+// import { AgChartsAngular } from 'ag-charts-angular';
 
 @Component({
   selector: 'overview-root',
   standalone: true,
-  imports: [AgChartsAngularModule],
+  imports: [],//AgChartsAngular
   templateUrl: '../../views/portal/overview.html',
   styleUrl: '../../styles/portal/overview.scss'
 })

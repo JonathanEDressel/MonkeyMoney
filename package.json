@@ -40,6 +40,8 @@
     "firebase": "^12.4.0",
     "jquery": "^3.7.1",
     "ng2-charts": "^8.0.0",
+    "ng2-currency-mask": "^13.0.3",
+    "react-currency-input-field": "^4.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
