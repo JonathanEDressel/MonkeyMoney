@@ -32,7 +32,6 @@ export class AccountsComponent {
         this.acctBalance.set(0);
         this.acctType.set("");
         this.acctName.set("");
-        console.log('clear')
     }
 
     ngOnInit(): void {
@@ -41,7 +40,6 @@ export class AccountsComponent {
     }
 
     activate(): void {
-        // console.log('account tab called');
     }
 
     addAccount(): void {
